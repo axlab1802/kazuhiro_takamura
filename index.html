@@ -225,6 +225,8 @@
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         /* Section: Origin */
@@ -331,6 +333,21 @@
             overflow: hidden;
         }
 
+        .band-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/assets/band.png');
+            background-size: 66% auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+            z-index: 0;
+        }
+
         .section-band::before {
             content: '';
             position: absolute;
@@ -346,6 +363,7 @@
                     rgba(196, 61, 122, 0.03) 100px,
                     rgba(196, 61, 122, 0.03) 101px
                 );
+            z-index: 1;
         }
 
         .band-content {
@@ -483,60 +501,189 @@
             line-height: 1.8;
         }
 
-        /* Section: Gallery */
-        .section-gallery {
-            background: var(--bg-dark);
-            padding: 5vh 0;
-        }
-
-        .gallery-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .gallery-title h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 300;
-            font-style: italic;
-            letter-spacing: 0.2em;
-        }
-
-        .gallery-subtitle {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 0.3em;
-            margin-top: 1rem;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1rem;
-            padding: 0 2rem;
-        }
-
-        .gallery-item {
-            aspect-ratio: 1;
-            overflow: hidden;
+        /* Section: Works - Vision Pro Style */
+        .section-works {
             position: relative;
-            cursor: pointer;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
         }
 
-        .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-        .gallery-item:nth-child(4) { grid-column: span 2; }
+        .works-bg {
+            position: absolute;
+            inset: 0;
+            background: url('/assets/back.jpg') center/cover no-repeat;
+            filter: blur(8px);
+            transform: scale(1.1);
+            z-index: 0;
+        }
 
-        .gallery-item img {
+        .works-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .works-sidebar {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            padding: 1rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        .works-sidebar button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.7);
+            color: #555;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .works-sidebar button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+        }
+
+        .works-carousel {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            perspective: 1200px;
+            z-index: 2;
+        }
+
+        .works-track {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .works-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 320px;
+            height: 420px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .works-card.active {
+            width: 380px;
+            height: 500px;
+            z-index: 10;
+        }
+
+        .works-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(30%) contrast(1.1);
-            transition: all 0.7s ease;
         }
 
-        .gallery-item:hover img {
-            filter: grayscale(0%) contrast(1);
+        .works-card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(255,255,255,0.95));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .works-card.active .works-card-info {
+            opacity: 1;
+        }
+
+        .works-card-info h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .works-card-info p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .works-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 10;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .works-nav button {
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .works-nav button:hover {
+            background: rgba(255, 255, 255, 1);
             transform: scale(1.1);
+        }
+
+        .works-dots {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            z-index: 10;
+        }
+
+        .works-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .works-dot.active {
+            background: #8B9A6D;
         }
 
         .gallery-item::after {
@@ -724,6 +871,26 @@
                 min-width: 140px;
             }
 
+            .works-vision {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .works-sidebar {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .works-stage {
+                height: 55vh;
+                min-height: 460px;
+            }
+
+            .works-card {
+                width: min(90vw, 360px);
+                height: 480px;
+            }
+
             .section-number {
                 font-size: 5rem;
             }
@@ -771,6 +938,28 @@
         </div>
     </section>
 
+    <!-- Works -->
+    <section class="section-works" id="works-section">
+        <div class="works-bg"></div>
+        <div class="works-overlay"></div>
+        
+        <div class="works-sidebar">
+            <button aria-label="リンク">🔗</button>
+            <button aria-label="お気に入り">♡</button>
+            <button aria-label="アーティスト">👤</button>
+        </div>
+
+        <div class="works-carousel">
+            <div class="works-track" id="works-track"></div>
+        </div>
+
+        <div class="works-nav">
+            <button id="works-prev" aria-label="前へ">‹</button>
+            <div class="works-dots" id="works-dots"></div>
+            <button id="works-next" aria-label="次へ">›</button>
+        </div>
+    </section>
+
     <!-- Origin -->
     <section class="story-section section-origin">
         <div class="origin-bg" id="origin-bg"></div>
@@ -798,7 +987,8 @@
     </section>
 
     <!-- Band & Love -->
-    <section class="story-section section-band">
+    <section class="story-section section-band" id="band-section">
+        <div class="band-bg" id="band-bg"></div>
         <div class="story-container">
             <div class="band-content">
                 <div class="section-number">02</div>
@@ -868,36 +1058,6 @@
         </div>
     </section>
 
-    <!-- Gallery -->
-    <section class="story-section section-gallery">
-        <div class="story-container">
-            <div class="gallery-title">
-                <h2>Works</h2>
-                <p class="gallery-subtitle">— 花で紡ぐ物語 —</p>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="/assets/1.JPG" alt="和風アレンジメント">
-                </div>
-                <div class="gallery-item">
-                    <img src="/assets/2.JPG" alt="ブーケ">
-                </div>
-                <div class="gallery-item">
-                    <img src="/assets/3.JPG" alt="母の日アレンジ">
-                </div>
-                <div class="gallery-item">
-                    <img src="/assets/4.JPG" alt="カラフルアレンジ">
-                </div>
-                <div class="gallery-item">
-                    <img src="/assets/5.JPG" alt="フラワーアレンジ">
-                </div>
-                <div class="gallery-item">
-                    <img src="/assets/IMG_0100.JPG" alt="カート">
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Now -->
     <section class="story-section section-now">
         <div class="story-container">
@@ -957,22 +1117,183 @@
             observer.observe(section);
         });
 
-        // Zoom Transition Effect
+        // Scroll Effects for Background Images
         const originSection = document.querySelector('.section-origin');
         const originBg = document.getElementById('origin-bg');
+        const bandSection = document.getElementById('band-section');
+        const bandBg = document.getElementById('band-bg');
+
+        // Works Gallery
+        const worksTrack = document.getElementById('works-track');
+        const worksDots = document.getElementById('works-dots');
+        const worksPrev = document.getElementById('works-prev');
+        const worksNext = document.getElementById('works-next');
+        let worksIndex = 0;
+
+        const worksData = [
+            { src: '/assets/works/1.JPG', title: '紅薔薇と金扇', date: '2024年1月' },
+            { src: '/assets/works/2.JPG', title: '春の訪れ', date: '2024年2月' },
+            { src: '/assets/works/3.JPG', title: '桜舞う季節', date: '2024年3月' },
+            { src: '/assets/works/4.JPG', title: '新緑の彩り', date: '2024年4月' },
+            { src: '/assets/works/5.JPG', title: '母への感謝', date: '2024年5月' },
+            { src: '/assets/works/6.JPG', title: '紫陽花の詩', date: '2024年6月' },
+            { src: '/assets/works/7.JPG', title: '夏の輝き', date: '2024年7月' },
+            { src: '/assets/works/8.JPG', title: '向日葵の笑顔', date: '2024年8月' },
+            { src: '/assets/works/9.JPG', title: '秋風の調べ', date: '2024年9月' },
+            { src: '/assets/works/10.JPG', title: '紅葉の舞', date: '2024年10月' },
+            { src: '/assets/works/11.JPG', title: '感謝の花束', date: '2024年11月' },
+            { src: '/assets/works/12.JPG', title: '聖夜の祝福', date: '2024年12月' },
+            { src: '/assets/works/13.JPG', title: '新春の慶び', date: '2025年1月' },
+            { src: '/assets/works/14.JPG', title: '愛の告白', date: '2025年2月' },
+            { src: '/assets/works/15.JPG', title: '花開く未来', date: '2025年3月' }
+        ];
+
+        function initWorks() {
+            if (!worksTrack) return;
+
+            // カードを生成
+            worksData.forEach((work, i) => {
+                const card = document.createElement('div');
+                card.className = 'works-card';
+                card.dataset.index = i;
+                card.innerHTML = `
+                    <img src="${work.src}" alt="${work.title}">
+                    <div class="works-card-info">
+                        <h3>${work.title}</h3>
+                        <p>${work.date}</p>
+                    </div>
+                `;
+                // カードクリックで切り替え
+                card.addEventListener('click', () => {
+                    const clickedIndex = parseInt(card.dataset.index);
+                    if (clickedIndex !== worksIndex) {
+                        worksIndex = clickedIndex;
+                        updateWorks();
+                    }
+                });
+                worksTrack.appendChild(card);
+            });
+
+            // ドットを生成
+            if (worksDots) {
+                worksData.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'works-dot';
+                    if (i === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => {
+                        worksIndex = i;
+                        updateWorks();
+                    });
+                    worksDots.appendChild(dot);
+                });
+            }
+
+            updateWorks();
+        }
+
+        function updateWorks() {
+            const cards = worksTrack.querySelectorAll('.works-card');
+            const total = worksData.length;
+
+            cards.forEach((card, i) => {
+                let offset = i - worksIndex;
+                
+                // 循環処理
+                if (offset > total / 2) offset -= total;
+                if (offset < -total / 2) offset += total;
+
+                const abs = Math.abs(offset);
+                const isActive = offset === 0;
+                const isVisible = abs <= 3;
+
+                // 位置計算
+                const translateX = offset * 280;
+                const rotateY = offset * -25;
+                const translateZ = isActive ? 100 : -100 - abs * 100;
+                const scale = isActive ? 1 : 0.75 - abs * 0.1;
+                const opacity = isVisible ? (isActive ? 1 : 0.7 - abs * 0.15) : 0;
+
+                card.classList.toggle('active', isActive);
+                card.style.opacity = opacity;
+                card.style.zIndex = isActive ? 10 : 5 - abs;
+                card.style.transform = `translate(-50%, -50%) translateX(${translateX}px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
+            });
+
+            // ドット更新
+            if (worksDots) {
+                Array.from(worksDots.children).forEach((dot, i) => {
+                    dot.classList.toggle('active', i === worksIndex);
+                });
+            }
+        }
+
+        function shiftWorks(dir) {
+            worksIndex = (worksIndex + dir + worksData.length) % worksData.length;
+            updateWorks();
+        }
+
+        // 初期化
+        initWorks();
+
+        // ボタンイベント
+        if (worksPrev) worksPrev.addEventListener('click', () => shiftWorks(-1));
+        if (worksNext) worksNext.addEventListener('click', () => shiftWorks(1));
+
+        // キーボード操作
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') shiftWorks(1);
+            if (e.key === 'ArrowLeft') shiftWorks(-1);
+        });
+
+        // スワイプ操作
+        if (worksTrack) {
+            let startX = 0;
+            let isDragging = false;
+
+            worksTrack.addEventListener('pointerdown', (e) => {
+                startX = e.clientX;
+                isDragging = true;
+                worksTrack.setPointerCapture(e.pointerId);
+            });
+
+            worksTrack.addEventListener('pointerup', (e) => {
+                if (!isDragging) return;
+                const delta = e.clientX - startX;
+                if (Math.abs(delta) > 50) {
+                    shiftWorks(delta < 0 ? 1 : -1);
+                }
+                isDragging = false;
+            });
+
+            worksTrack.addEventListener('pointercancel', () => {
+                isDragging = false;
+            });
+        }
 
         function handleScrollEffects() {
             const scrolled = window.pageYOffset;
+            const viewportHeight = window.innerHeight;
 
+            // 始まりの章の背景
             if (originSection && originBg) {
                 const rect = originSection.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
                 const progress = Math.min(
                     1,
                     Math.max(0, (viewportHeight - rect.top) / (rect.height + viewportHeight))
                 );
                 const maxOpacity = 0.7;
                 originBg.style.opacity = (1 - progress) * maxOpacity;
+            }
+
+            // バンドセクションの背景
+            if (bandSection && bandBg) {
+                const rect = bandSection.getBoundingClientRect();
+                const progress = Math.min(
+                    1,
+                    Math.max(0, (viewportHeight - rect.top) / (rect.height + viewportHeight))
+                );
+                const maxOpacity = 0.7;
+                bandBg.style.opacity = progress * maxOpacity;
             }
 
             // Parallax effect for vertical text
@@ -983,11 +1304,12 @@
         }
 
         window.addEventListener('scroll', handleScrollEffects);
-        handleScrollEffects(); // 初期化
+        handleScrollEffects();
 
-        // Smooth scroll for hero indicator - 次のセクションへ
+        // Smooth scroll for hero indicator
         document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.querySelector('.section-origin').scrollIntoView({ behavior: 'smooth' });
+            const target = document.getElementById('works-section') || document.querySelector('.section-origin');
+            target.scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
