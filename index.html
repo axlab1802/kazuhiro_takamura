@@ -229,8 +229,34 @@
 
         /* Section: Origin */
         .section-origin {
+            position: relative;
+            overflow: hidden;
             background: 
                 linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
+        }
+
+        .origin-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('/assets/homeroom.JPG');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            transition: opacity 0.2s linear;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .origin-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.55);
+        }
+
+        .section-origin .story-container {
+            position: relative;
+            z-index: 1;
         }
 
         .origin-content {
@@ -747,6 +773,7 @@
 
     <!-- Origin -->
     <section class="story-section section-origin">
+        <div class="origin-bg" id="origin-bg"></div>
         <div class="story-container">
             <div class="origin-content">
                 <div class="origin-text">
@@ -877,7 +904,7 @@
             <div class="now-content">
                 <div class="now-visual">
                     <div class="flower-frame">
-                        <img src="/assets/kazutaka.jpg" alt="代表作品">
+                        <img src="/assets/IMG_0100.JPG" alt="代表作品">
                     </div>
                 </div>
                 <div class="now-text">
@@ -931,8 +958,22 @@
         });
 
         // Zoom Transition Effect
+        const originSection = document.querySelector('.section-origin');
+        const originBg = document.getElementById('origin-bg');
+
         function handleScrollEffects() {
             const scrolled = window.pageYOffset;
+
+            if (originSection && originBg) {
+                const rect = originSection.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const progress = Math.min(
+                    1,
+                    Math.max(0, (viewportHeight - rect.top) / (rect.height + viewportHeight))
+                );
+                const maxOpacity = 0.7;
+                originBg.style.opacity = (1 - progress) * maxOpacity;
+            }
 
             // Parallax effect for vertical text
             const verticalTexts = document.querySelectorAll('.vertical-text');
