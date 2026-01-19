@@ -513,6 +513,29 @@
             padding: 2rem 0;
         }
 
+        .works-header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .works-section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            letter-spacing: 0.2em;
+            margin-bottom: 0.3rem;
+        }
+
+        .works-section-subtitle {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--gold);
+            letter-spacing: 0.3em;
+        }
+
         .works-bg {
             position: absolute;
             inset: 0;
@@ -942,6 +965,11 @@
         <div class="works-bg"></div>
         <div class="works-overlay"></div>
         
+        <div class="works-header">
+            <h2 class="works-section-title">Works</h2>
+            <p class="works-section-subtitle">— 作品集 —</p>
+        </div>
+
         <div class="works-carousel">
             <div class="works-track" id="works-track"></div>
         </div>
