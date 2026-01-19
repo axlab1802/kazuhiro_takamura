@@ -529,39 +529,6 @@
             z-index: 1;
         }
 
-        .works-sidebar {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            padding: 1rem;
-            border-radius: 24px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10;
-        }
-
-        .works-sidebar button {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.7);
-            color: #555;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .works-sidebar button:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: scale(1.1);
-        }
-
         .works-carousel {
             position: relative;
             width: 100%;
@@ -943,12 +910,6 @@
         <div class="works-bg"></div>
         <div class="works-overlay"></div>
         
-        <div class="works-sidebar">
-            <button aria-label="リンク">🔗</button>
-            <button aria-label="お気に入り">♡</button>
-            <button aria-label="アーティスト">👤</button>
-        </div>
-
         <div class="works-carousel">
             <div class="works-track" id="works-track"></div>
         </div>
