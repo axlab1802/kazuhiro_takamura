@@ -600,12 +600,44 @@
             color: #666;
         }
 
+        .works-description {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            margin: 2rem auto 0;
+            padding: 2rem 2.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .works-title-display {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .works-text {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            line-height: 2;
+            color: var(--text-primary);
+            font-weight: 300;
+            text-align: justify;
+            opacity: 0.9;
+        }
+
         .works-nav {
             display: flex;
             align-items: center;
             gap: 1.5rem;
             z-index: 10;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             padding: 0.8rem 1.5rem;
             border-radius: 50px;
             background: rgba(255, 255, 255, 0.15);
@@ -914,6 +946,11 @@
             <div class="works-track" id="works-track"></div>
         </div>
 
+        <div class="works-description" id="works-description">
+            <h3 class="works-title-display" id="works-title-display">「覚悟」</h3>
+            <p class="works-text" id="works-text"></p>
+        </div>
+
         <div class="works-nav">
             <button id="works-prev" aria-label="前へ">‹</button>
             <div class="works-dots" id="works-dots"></div>
@@ -1089,25 +1126,29 @@
         const worksDots = document.getElementById('works-dots');
         const worksPrev = document.getElementById('works-prev');
         const worksNext = document.getElementById('works-next');
+        const worksTitleDisplay = document.getElementById('works-title-display');
+        const worksText = document.getElementById('works-text');
         let worksIndex = 0;
+        let worksData = [];
 
-        const worksData = [
-            { src: '/assets/works/1.JPG', title: '紅薔薇と金扇', date: '2024年1月' },
-            { src: '/assets/works/2.JPG', title: '春の訪れ', date: '2024年2月' },
-            { src: '/assets/works/3.JPG', title: '桜舞う季節', date: '2024年3月' },
-            { src: '/assets/works/4.JPG', title: '新緑の彩り', date: '2024年4月' },
-            { src: '/assets/works/5.JPG', title: '母への感謝', date: '2024年5月' },
-            { src: '/assets/works/6.JPG', title: '紫陽花の詩', date: '2024年6月' },
-            { src: '/assets/works/7.JPG', title: '夏の輝き', date: '2024年7月' },
-            { src: '/assets/works/8.JPG', title: '向日葵の笑顔', date: '2024年8月' },
-            { src: '/assets/works/9.JPG', title: '秋風の調べ', date: '2024年9月' },
-            { src: '/assets/works/10.JPG', title: '紅葉の舞', date: '2024年10月' },
-            { src: '/assets/works/11.JPG', title: '感謝の花束', date: '2024年11月' },
-            { src: '/assets/works/12.JPG', title: '聖夜の祝福', date: '2024年12月' },
-            { src: '/assets/works/13.JPG', title: '新春の慶び', date: '2025年1月' },
-            { src: '/assets/works/14.JPG', title: '愛の告白', date: '2025年2月' },
-            { src: '/assets/works/15.JPG', title: '花開く未来', date: '2025年3月' }
-        ];
+        // JSONから作品データを読み込み
+        async function loadWorksData() {
+            try {
+                const response = await fetch('/works-data.json');
+                const data = await response.json();
+                worksData = data.works.map(work => ({
+                    src: work.image,
+                    title: work.title,
+                    description: work.description,
+                    id: work.id
+                }));
+                initWorks();
+            } catch (error) {
+                console.error('作品データの読み込みに失敗しました:', error);
+                // フォールバック用の空データ
+                worksData = [];
+            }
+        }
 
         function initWorks() {
             if (!worksTrack) return;
@@ -1120,8 +1161,8 @@
                 card.innerHTML = `
                     <img src="${work.src}" alt="${work.title}">
                     <div class="works-card-info">
-                        <h3>${work.title}</h3>
-                        <p>${work.date}</p>
+                        <h3>「${work.title}」</h3>
+                        <p>作品 ${work.id}</p>
                     </div>
                 `;
                 // カードクリックで切り替え
@@ -1186,6 +1227,13 @@
                     dot.classList.toggle('active', i === worksIndex);
                 });
             }
+
+            // 解説パネル更新
+            if (worksTitleDisplay && worksText && worksData[worksIndex]) {
+                const current = worksData[worksIndex];
+                worksTitleDisplay.textContent = `「${current.title}」`;
+                worksText.textContent = current.description;
+            }
         }
 
         function shiftWorks(dir) {
@@ -1193,8 +1241,8 @@
             updateWorks();
         }
 
-        // 初期化
-        initWorks();
+        // 初期化（JSONからデータを読み込む）
+        loadWorksData();
 
         // ボタンイベント
         if (worksPrev) worksPrev.addEventListener('click', () => shiftWorks(-1));
