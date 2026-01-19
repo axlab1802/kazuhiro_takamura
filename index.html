@@ -64,12 +64,14 @@
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            padding-top: 6rem;
+            padding-bottom: 6rem;
         }
 
         .hero-bg {
@@ -140,17 +142,10 @@
         }
 
         .hero-image {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            max-width: 450px;
-            width: 85%;
-            z-index: 5;
-            opacity: 0;
-            animation: fadeUp 1s ease 1.7s forwards;
-            pointer-events: none;
+            margin-top: 2.5rem;
+            width: min(70vw, 520px);
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-image img {
@@ -158,71 +153,6 @@
             height: auto;
             display: block;
             filter: contrast(1.1) brightness(1.05);
-            /* メガネの右目（画面向かって右）の位置を基準にズーム */
-            transform-origin: 60% 22%;
-            will-change: transform;
-        }
-
-        .hero-image.zooming {
-            z-index: 1000;
-        }
-
-        /* Zoom Transition Section */
-        .zoom-transition {
-            height: 150vh;
-            position: relative;
-            background: var(--bg-deep);
-        }
-
-        .zoom-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: var(--bg-deep);
-        }
-
-        .zoom-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-deep);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        .zoom-vignette {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 62% 24%, transparent 0%, var(--bg-deep) 70%);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 998;
-        }
-
-        .zoom-text {
-            position: fixed;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: var(--text-muted);
-            letter-spacing: 0.3em;
-            opacity: 0;
-            text-align: center;
-            white-space: nowrap;
-            z-index: 1001;
         }
 
         .scroll-indicator {
@@ -763,12 +693,9 @@
 
         @media (max-width: 768px) {
             .hero-image {
-                max-width: 350px;
-            }
-
-            .zoom-text {
-                font-size: 0.9rem;
-                letter-spacing: 0.2em;
+                width: 40vw;
+                max-width: 220px;
+                min-width: 140px;
             }
 
             .section-number {
@@ -800,11 +727,6 @@
     <div class="vertical-text vertical-left">TAKAMURA KAZUHIRO — FLORAL DESIGNER</div>
     <div class="vertical-text vertical-right">回り道の先に、花が咲いた。</div>
 
-    <!-- Fixed Hero Image for Zoom Effect -->
-    <div class="hero-image" id="hero-image">
-        <img src="/assets/kazutakamura.png" alt="髙村 和弘 ">
-    </div>
-
     <!-- Hero -->
     <section class="hero">
         <div class="hero-bg"></div>
@@ -813,19 +735,13 @@
             <h1 class="hero-name"><span>髙村 和弘</span></h1>
             <p class="hero-tagline">Floral Designer</p>
             <p class="hero-catchcopy">回り道の先に、花が咲いた。</p>
+            <div class="hero-image" id="hero-image">
+                <img src="/assets/kazutakamura.png" alt="髙村 和弘 ">
+            </div>
         </div>
         <div class="scroll-indicator">
             <span>SCROLL</span>
             <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- Zoom Transition (spacer for scroll effect) -->
-    <section class="zoom-transition" id="zoom-section">
-        <div class="zoom-container">
-            <div class="zoom-vignette" id="zoom-vignette"></div>
-            <div class="zoom-overlay" id="zoom-overlay"></div>
-            <div class="zoom-text" id="zoom-text">— 物語の始まり —</div>
         </div>
     </section>
 
@@ -1015,74 +931,8 @@
         });
 
         // Zoom Transition Effect
-        const zoomSection = document.getElementById('zoom-section');
-        const heroImage = document.getElementById('hero-image');
-        const heroImg = heroImage.querySelector('img');
-        const zoomOverlay = document.getElementById('zoom-overlay');
-        const zoomVignette = document.getElementById('zoom-vignette');
-        const zoomText = document.getElementById('zoom-text');
-        const originSection = document.querySelector('.section-origin');
-        let zoomAutoScrolled = false;
-
-        function handleZoomScroll() {
+        function handleScrollEffects() {
             const scrolled = window.pageYOffset;
-            const viewportHeight = window.innerHeight;
-            const zoomStart = zoomSection.offsetTop;
-            const zoomHeight = zoomSection.offsetHeight;
-            const zoomEnd = zoomStart + zoomHeight;
-
-            // ヒーローセクション内（ズーム開始前）
-            if (scrolled < zoomStart) {
-                heroImage.classList.remove('zooming');
-                heroImg.style.transform = 'scale(1)';
-                heroImage.style.opacity = '1';
-                zoomVignette.style.opacity = '0';
-                zoomOverlay.style.opacity = '0';
-                zoomText.style.opacity = '0';
-                zoomAutoScrolled = false;
-            }
-            // ズームセクション内（ズーム実行中）
-            else if (scrolled >= zoomStart && scrolled <= zoomEnd) {
-                heroImage.classList.add('zooming');
-                
-                // 進行度を0から1に正規化（zoomSectionの高さ分でスクロール）
-                const progress = Math.max(0, Math.min(1, (scrolled - zoomStart) / (zoomHeight - viewportHeight)));
-                
-                // スケール：1から最大100倍まで拡大（進行度の3乗で、後半に一気に加速させる）
-                const scale = 1 + Math.pow(progress, 3) * 120;
-                
-                // ビネット効果（周囲が暗くなる）
-                const vignetteOpacity = Math.min(1, progress * 2.5);
-                
-                // オーバーレイ効果（早めに画面を暗くして次へ繋げる）
-                const overlayOpacity = progress > 0.5 ? (progress - 0.5) / 0.4 : 0;
-                
-                // テキスト表示（序盤でサッと出す）
-                const textOpacity = progress > 0.1 && progress < 0.5 ? Math.sin((progress - 0.1) / 0.4 * Math.PI) : 0;
-
-                // 画像の不透明度（早めに消す）
-                const imageOpacity = progress > 0.6 ? 1 - (progress - 0.6) / 0.3 : 1;
-
-                heroImg.style.transform = `scale(${scale})`;
-                heroImage.style.opacity = imageOpacity;
-                zoomVignette.style.opacity = vignetteOpacity;
-                zoomOverlay.style.opacity = overlayOpacity;
-                zoomText.style.opacity = textOpacity;
-            }
-            // ズームセクション以降
-            else {
-                heroImage.style.opacity = '0';
-                zoomVignette.style.opacity = '0';
-                zoomOverlay.style.opacity = '0';
-                zoomText.style.opacity = '0';
-                heroImage.classList.remove('zooming');
-            }
-
-            // ズーム完了後に次セクションへ自動スクロール（1回だけ）
-            if (!zoomAutoScrolled && scrolled >= zoomEnd) {
-                zoomAutoScrolled = true;
-                originSection.scrollIntoView({ behavior: 'smooth' });
-            }
 
             // Parallax effect for vertical text
             const verticalTexts = document.querySelectorAll('.vertical-text');
@@ -1091,12 +941,12 @@
             });
         }
 
-        window.addEventListener('scroll', handleZoomScroll);
-        handleZoomScroll(); // 初期化
+        window.addEventListener('scroll', handleScrollEffects);
+        handleScrollEffects(); // 初期化
 
-        // Smooth scroll for hero indicator - ズームセクションへ
+        // Smooth scroll for hero indicator - 次のセクションへ
         document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.getElementById('zoom-section').scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('.section-origin').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
