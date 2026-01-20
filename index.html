@@ -874,23 +874,31 @@
 
         /* Mada Section */
         .section-mada {
+            position: relative;
+            min-height: 200vh;
             padding: 4rem 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--bg-deep);
+            transition: background-color 0.1s ease;
+            overflow: hidden;
         }
 
         .mada-content {
             max-width: 600px;
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .mada-image {
             width: 100%;
             max-width: 500px;
             height: auto;
+            transform-origin: center center;
+            transition: transform 0.1s ease;
         }
 
         /* Animations */
@@ -1471,6 +1479,49 @@
             const target = document.getElementById('works-section') || document.querySelector('.section-origin');
             target.scrollIntoView({ behavior: 'smooth' });
         });
+
+        // Mada section scroll animation
+        const madaSection = document.querySelector('.section-mada');
+        const madaImage = document.querySelector('.mada-image');
+        
+        if (madaSection && madaImage) {
+            function handleMadaScroll() {
+                const rect = madaSection.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // セクションがビューポートに入ったら開始
+                if (rect.top < windowHeight && rect.bottom > 0) {
+                    // セクションの上端がビューポートに入った時点から、下端がビューポートから出るまで
+                    const scrollStart = windowHeight; // セクションの上端がビューポート上端に来た時
+                    const scrollEnd = -rect.height; // セクションの下端がビューポート上端に来た時
+                    const scrollRange = scrollStart - scrollEnd;
+                    const currentScroll = scrollStart - rect.top;
+                    const scrollProgress = Math.max(0, Math.min(1, currentScroll / scrollRange));
+                    
+                    // 画像の拡大: 1倍から4倍まで
+                    const scale = 1 + (scrollProgress * 3); // 1.0 → 4.0
+                    madaImage.style.transform = `scale(${scale})`;
+                    
+                    // 背景色の変化: 黒から白へ
+                    const bgProgress = scrollProgress;
+                    const r = Math.round(20 + (bgProgress * 235)); // 20 → 255
+                    const g = Math.round(20 + (bgProgress * 235)); // 20 → 255
+                    const b = Math.round(20 + (bgProgress * 235)); // 20 → 255
+                    madaSection.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                } else if (rect.top >= windowHeight) {
+                    // セクションがまだ下にある時は初期状態
+                    madaImage.style.transform = 'scale(1)';
+                    madaSection.style.backgroundColor = 'var(--bg-deep)';
+                } else if (rect.bottom <= 0) {
+                    // セクションが完全に上にスクロールされた時は最大状態
+                    madaImage.style.transform = 'scale(4)';
+                    madaSection.style.backgroundColor = 'rgb(255, 255, 255)';
+                }
+            }
+            
+            window.addEventListener('scroll', handleMadaScroll);
+            handleMadaScroll(); // 初期状態を設定
+        }
     </script>
 </body>
 </html>
