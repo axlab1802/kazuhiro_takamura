@@ -501,6 +501,37 @@
             line-height: 1.8;
         }
 
+        /* Challenge Card with Driver Background */
+        .challenge-card-driver {
+            position: relative;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .challenge-card-driver .card-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            filter: grayscale(20%);
+            transition: opacity 0.5s ease;
+        }
+
+        .challenge-card-driver:hover .card-bg-image {
+            opacity: 0.5;
+        }
+
+        .challenge-card-driver .card-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.7) 0%, rgba(40, 30, 35, 0.65) 100%);
+        }
+
         /* Special Challenge Card (with background image) */
         .challenge-card-special {
             grid-column: 1 / -1;
@@ -1166,14 +1197,17 @@
             <div class="section-number" style="text-align: center;">03</div>
             <h2 class="section-title" style="text-align: center; margin-bottom: 4rem;">挑戦の軌跡</h2>
             <div class="challenge-grid">
-                <div class="challenge-card">
-                    <div class="card-icon">🚚</div>
-                    <h3 class="card-title">運送の仕事</h3>
-                    <p class="card-desc">
-                        荷物を届ける仕事。<br>
-                        人の想いを届ける仕事。<br>
-                        この経験が、今に繋がっている。
-                    </p>
+                <div class="challenge-card challenge-card-driver">
+                    <div class="card-bg-image" style="background-image: url('/assets/driver.jpg')"></div>
+                    <div class="card-content">
+                        <div class="card-icon">🚚</div>
+                        <h3 class="card-title">運送の仕事</h3>
+                        <p class="card-desc">
+                            荷物を届ける仕事。<br>
+                            人の想いを届ける仕事。<br>
+                            この経験が、今に繋がっている。
+                        </p>
+                    </div>
                 </div>
                 <div class="challenge-card">
                     <div class="card-icon">📚</div>
