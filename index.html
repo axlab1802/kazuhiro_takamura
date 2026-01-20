@@ -501,6 +501,89 @@
             line-height: 1.8;
         }
 
+        /* Special Challenge Card (with background image) */
+        .challenge-card-special {
+            grid-column: 1 / -1;
+            display: flex;
+            position: relative;
+            padding: 0;
+            min-height: 400px;
+            background: transparent;
+            border: none;
+        }
+
+        .challenge-card-special .card-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            filter: grayscale(30%);
+            transition: opacity 0.5s ease;
+        }
+
+        .challenge-card-special:hover .card-bg-image {
+            opacity: 0.5;
+        }
+
+        .challenge-card-special .card-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(40, 30, 35, 0.85) 100%);
+            border: 1px solid rgba(196, 61, 122, 0.3);
+        }
+
+        .challenge-card-special .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .challenge-card-special .card-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-desc-story {
+            font-size: 1rem;
+            line-height: 2;
+            text-align: left;
+            max-width: 600px;
+        }
+
+        .card-desc-story em {
+            color: var(--gold);
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .story-highlight {
+            display: inline-block;
+            color: var(--accent-magenta);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .challenge-card-special {
+                min-height: auto;
+            }
+            
+            .challenge-card-special .card-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .card-desc-story {
+                font-size: 0.9rem;
+                line-height: 1.9;
+            }
+        }
+
         /* Section: Works - Vision Pro Style */
         .section-works {
             position: relative;
@@ -1106,14 +1189,24 @@
                         何歳からでも、遅くない。
                     </p>
                 </div>
-                <div class="challenge-card">
-                    <div class="card-icon">🌺</div>
-                    <h3 class="card-title">フラワーデザイナー資格</h3>
-                    <p class="card-desc">
-                        花という新しい言語を学び、<br>
-                        想いを形にする術を手に入れた。<br>
-                        人生の第二章の始まり。
-                    </p>
+                <div class="challenge-card challenge-card-special">
+                    <div class="card-bg-image" style="background-image: url('/assets/goukaku.JPG')"></div>
+                    <div class="card-content">
+                        <div class="card-icon">🌺</div>
+                        <h3 class="card-title">フラワーデザイナー1級</h3>
+                        <p class="card-desc card-desc-story">
+                            <span class="story-highlight">8回目の挑戦で、ついに掴んだ。</span><br><br>
+                            何度も落ちた。何度も心が折れそうになった。<br>
+                            でも、どうしても諦められなかった。<br><br>
+                            中学時代、誰よりも自分を信じてくれた恩師がいた。<br>
+                            「和弘なら大丈夫だ」——その言葉が、<br>
+                            何度も俺を立ち上がらせた。<br><br>
+                            <em>いつか、自分の花を届けたい。</em><br>
+                            <em>1級の腕で、最高の花を。</em><br><br>
+                            8年越しの想いが、ようやく形になった日。<br>
+                            <span class="story-highlight">涙が止まらなかった。</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
