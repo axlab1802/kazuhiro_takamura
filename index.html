@@ -339,7 +339,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('/assets/band.png');
+            background-image: url('/assets/band2.JPG');
             background-size: 66% auto;
             background-position: center;
             background-repeat: no-repeat;
@@ -593,6 +593,239 @@
             color: var(--accent-magenta);
             font-weight: 500;
             font-size: 1.1rem;
+        }
+
+        /* Qualifications Section */
+        .qualifications-section {
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .qualifications-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .qualifications-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .qualifications-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .qualifications-title-en {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .qualifications-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.5rem auto;
+        }
+
+        .main-qualification-card {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(26, 37, 47, 0.95) 100%);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(196, 61, 122, 0.3);
+        }
+
+        .main-qualification-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(201, 169, 98, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .qualification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: var(--bg-deep);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-qualification-card h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .main-qualification-card .message {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            line-height: 2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-qualification-card .message p {
+            margin-bottom: 1rem;
+        }
+
+        .main-qualification-card .message .highlight {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .main-qualification-card .signature {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .other-qualifications {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .other-qualifications h4 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .other-qualifications h4::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .other-qualifications .subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+        }
+
+        .qualification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .qualification-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .qualification-item:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .qualification-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--gold) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .qualification-info h5 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .qualification-info span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .qualifications-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-quote {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-quote-en {
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            .qualifications-section {
+                margin-top: 2rem;
+                padding-top: 2rem;
+            }
+
+            .main-qualification-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .other-qualifications {
+                padding: 2rem 1.5rem;
+            }
+
+            .qualification-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -907,6 +1140,7 @@
         .section-mada {
             padding: 4rem 2rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             background: var(--bg-deep);
@@ -916,12 +1150,20 @@
             max-width: 600px;
             width: 100%;
             text-align: center;
+            margin-bottom: 3rem;
         }
 
         .mada-image {
             width: 100%;
             max-width: 500px;
             height: auto;
+        }
+
+        .section-mada .section-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Animations */
@@ -1190,14 +1432,6 @@
                         </p>
                     </div>
                 </div>
-                <div class="challenge-card">
-                    <h3 class="card-title">高卒認定取得</h3>
-                    <p class="card-desc">
-                        娘たちを育て上げた後、<br>
-                        自分自身の学びに向き合った。<br>
-                        何歳からでも、遅くない。
-                    </p>
-                </div>
                 <div class="challenge-card challenge-card-special">
                     <div class="card-bg-image" style="background-image: url('/assets/goukaku.JPG')"></div>
                     <div class="card-content">
@@ -1215,6 +1449,113 @@
                             <span class="story-highlight">涙が止まらなかった。</span>
                         </p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Qualifications Section -->
+            <div class="qualifications-section">
+                <div class="qualifications-header">
+                    <p class="qualifications-label">Qualifications</p>
+                    <h2 class="qualifications-title">資格取得</h2>
+                    <p class="qualifications-title-en">NEVER TOO LATE TO LEARN</p>
+                    <div class="qualifications-divider"></div>
+                </div>
+
+                <!-- メイン資格：高卒認定 -->
+                <div class="main-qualification-card">
+                    <div class="qualification-badge">
+                        <span>MILESTONE</span>
+                    </div>
+                    <h3>高卒認定取得</h3>
+                    <div class="message">
+                        <p>娘たちを育てながら、自分自身の学びに向き合った。</p>
+                        <p>深夜のトラックを降りて、子どもたちを寝かしつけてから開く参考書。<br>
+                        眠い目をこすりながら解いた問題集。<br>
+                        何度も心が折れそうになった。</p>
+                        <p>でも、娘たちに見せたかったんだ。<br>
+                        <span class="highlight">「何歳からでも、遅くない」</span>ってことを。</p>
+                        <p>父親の背中で、それを証明したかった。</p>
+                        <div class="signature">
+                            — 妻と娘たちへの、約束を果たすために
+                        </div>
+                    </div>
+                </div>
+
+                <!-- その他の資格 -->
+                <div class="other-qualifications">
+                    <h4>その他取得した資格</h4>
+                    <p class="subtitle">整備士からドライバー、そしてフラワーデザイナーへ。すべての経験が、今の俺を作っている。</p>
+
+                    <div class="qualification-grid">
+                        <!-- 自動車整備士 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🔧</div>
+                            <div class="qualification-info">
+                                <h5>自動車整備士 3級</h5>
+                                <span>原点となる技術者としての基礎</span>
+                            </div>
+                        </div>
+
+                        <!-- 危険物取扱者 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">⚠️</div>
+                            <div class="qualification-info">
+                                <h5>危険物取扱者 乙種</h5>
+                                <span>ガソリンスタンド勤務時代に取得</span>
+                            </div>
+                        </div>
+
+                        <!-- 食品衛生管理者 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🍽️</div>
+                            <div class="qualification-info">
+                                <h5>食品衛生管理者</h5>
+                                <span>深夜の飲食店勤務で培った知識</span>
+                            </div>
+                        </div>
+
+                        <!-- 国内ライセンスA級 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🏁</div>
+                            <div class="qualification-info">
+                                <h5>国内ライセンス A級</h5>
+                                <span>JAF公認レーシングライセンス</span>
+                            </div>
+                        </div>
+
+                        <!-- 国際ライセンスA級 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🌍</div>
+                            <div class="qualification-info">
+                                <h5>国際ライセンス A級</h5>
+                                <span>FIA国際レーシングライセンス</span>
+                            </div>
+                        </div>
+
+                        <!-- 歴史検定 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">📜</div>
+                            <div class="qualification-info">
+                                <h5>歴史検定 2級</h5>
+                                <span>歴史への探究心が止まらない</span>
+                            </div>
+                        </div>
+
+                        <!-- 宇宙天文検定 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">⭐</div>
+                            <div class="qualification-info">
+                                <h5>宇宙天文検定 3級</h5>
+                                <span>深夜のトラックから見た星空への憧れ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- フッターメッセージ -->
+                <div class="qualifications-footer">
+                    <p class="footer-quote">「俺ってまだでしょ？」</p>
+                    <p class="footer-quote-en">I'M JUST GETTING STARTED.</p>
                 </div>
             </div>
         </div>
@@ -1263,7 +1604,11 @@
     <!-- Mada -->
     <section class="section-mada">
         <div class="mada-content">
-            <img src="/assets/mada.png" alt="俺ってまだでしょ？" class="mada-image">
+            <img src="/assets/band.png" alt="俺ってまだでしょ？" class="mada-image">
+        </div>
+        <div class="section-footer">
+            <p class="footer-quote">「俺ってまだでしょ？」</p>
+            <p class="footer-quote-en">I'M JUST GETTING STARTED.</p>
         </div>
     </section>
 

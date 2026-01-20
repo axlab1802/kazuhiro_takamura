@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高村和弘 - 資格取得セクション</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --accent: #8B7355;
+            --gold: #C9A962;
+            --cream: #FAF8F5;
+            --text: #333333;
+            --text-light: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        /* ヘッダー装飾 */
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .section-title-en {
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 24px auto;
+        }
+
+        /* メイン資格カード */
+        .main-qualification {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+            border-radius: 16px;
+            padding: 60px 50px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-qualification::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(201, 169, 98, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .main-qualification::after {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: Georgia, serif;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.05);
+            line-height: 1;
+        }
+
+        .qualification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gold);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .qualification-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .main-qualification h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 36px;
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .main-qualification .message {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 17px;
+            line-height: 2.2;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-qualification .message p {
+            margin-bottom: 16px;
+        }
+
+        .main-qualification .message .highlight {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .main-qualification .signature {
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* その他の資格 */
+        .other-qualifications {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        .other-qualifications h4 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .other-qualifications h4::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .other-qualifications .subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 35px;
+            padding-left: 16px;
+        }
+
+        .qualification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .qualification-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: var(--cream);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .qualification-item:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 115, 85, 0.1);
+        }
+
+        .qualification-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .qualification-icon svg {
+            width: 22px;
+            height: 22px;
+            color: #ffffff;
+        }
+
+        .qualification-info h5 {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .qualification-info span {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* フッターメッセージ */
+        .section-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        .footer-quote {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .footer-quote-en {
+            font-size: 14px;
+            color: var(--accent);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 24px;
+            }
+
+            .main-qualification {
+                padding: 40px 30px;
+            }
+
+            .main-qualification h3 {
+                font-size: 28px;
+            }
+
+            .other-qualifications {
+                padding: 35px 25px;
+            }
+
+            .qualification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <!-- セクションヘッダー -->
+        <div class="section-header">
+            <p class="section-label">Qualifications</p>
+            <h2 class="section-title">資格取得</h2>
+            <p class="section-title-en">NEVER TOO LATE TO LEARN</p>
+            <div class="divider"></div>
+        </div>
+
+        <!-- メイン資格：高卒認定 -->
+        <div class="main-qualification">
+            <div class="qualification-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+                MILESTONE
+            </div>
+            <h3>高卒認定取得</h3>
+            <div class="message">
+                <p>娘たちを育てながら、自分自身の学びに向き合った。</p>
+                <p>深夜のトラックを降りて、子どもたちを寝かしつけてから開く参考書。<br>
+                眠い目をこすりながら解いた問題集。<br>
+                何度も心が折れそうになった。</p>
+                <p>でも、娘たちに見せたかったんだ。<br>
+                <span class="highlight">「何歳からでも、遅くない」</span>ってことを。</p>
+                <p>父親の背中で、それを証明したかった。</p>
+                <div class="signature">
+                    — 妻と娘たちへの、約束を果たすために
+                </div>
+            </div>
+        </div>
+
+        <!-- その他の資格 -->
+        <div class="other-qualifications">
+            <h4>その他取得した資格</h4>
+            <p class="subtitle">整備士からドライバー、そしてフラワーデザイナーへ。すべての経験が、今の俺を作っている。</p>
+
+            <div class="qualification-grid">
+                <!-- 自動車整備士 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>自動車整備士 3級</h5>
+                        <span>原点となる技術者としての基礎</span>
+                    </div>
+                </div>
+
+                <!-- 危険物取扱者 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>危険物取扱者 乙種</h5>
+                        <span>ガソリンスタンド勤務時代に取得</span>
+                    </div>
+                </div>
+
+                <!-- 食品衛生管理者 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a10 10 0 1 0 10 10H12V2z"/>
+                            <path d="M20.2 9.8a10 10 0 0 0-8.4-8"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>食品衛生管理者</h5>
+                        <span>深夜の飲食店勤務で培った知識</span>
+                    </div>
+                </div>
+
+                <!-- 国内ライセンスA級 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>国内ライセンス A級</h5>
+                        <span>JAF公認レーシングライセンス</span>
+                    </div>
+                </div>
+
+                <!-- 国際ライセンスA級 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>国際ライセンス A級</h5>
+                        <span>FIA国際レーシングライセンス</span>
+                    </div>
+                </div>
+
+                <!-- 歴史検定 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>歴史検定 2級</h5>
+                        <span>歴史への探究心が止まらない</span>
+                    </div>
+                </div>
+
+                <!-- 宇宙天文検定 -->
+                <div class="qualification-item">
+                    <div class="qualification-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <div class="qualification-info">
+                        <h5>宇宙天文検定 3級</h5>
+                        <span>深夜のトラックから見た星空への憧れ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- フッターメッセージ -->
+        <div class="section-footer">
+            <p class="footer-quote">「俺ってまだでしょ？」</p>
+            <p class="footer-quote-en">I'M JUST GETTING STARTED.</p>
+        </div>
+    </section>
+</body>
+</html>
