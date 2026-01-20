@@ -856,10 +856,24 @@
         }
 
         @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding-top: 4rem;
+                padding-bottom: 3rem;
+            }
+            
             .hero-image {
-                width: 40vw;
-                max-width: 220px;
-                min-width: 140px;
+                width: 70vw;
+                max-width: 320px;
+                min-width: 220px;
+            }
+            
+            .scroll-indicator {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 2rem;
             }
 
             .section-works {
