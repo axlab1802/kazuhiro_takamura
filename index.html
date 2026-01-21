@@ -878,6 +878,25 @@
             letter-spacing: 0.3em;
         }
 
+        .add-work-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent-magenta), var(--accent-orange));
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(196, 61, 122, 0.3);
+        }
+
+        .add-work-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(196, 61, 122, 0.4);
+        }
+
         .works-bg {
             position: absolute;
             inset: 0;
@@ -1364,6 +1383,7 @@
         <div class="works-header">
             <h2 class="works-section-title">Works</h2>
             <p class="works-section-subtitle">— 作品集 —</p>
+            <a href="/upload.html" class="add-work-btn">+ 作品を追加</a>
         </div>
 
         <div class="works-carousel">

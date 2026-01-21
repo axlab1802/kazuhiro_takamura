@@ -13,6 +13,9 @@
 - **HTML/CSS** - モダンなレスポンシブデザイン
 - **JavaScript** - インタラクティブなアニメーション
 - **Vercel** - 自動デプロイ対応
+- **Vercel Blob** - 画像ストレージ
+- **Vercel KV** - データストレージ
+- **Claude API** - AI画像解析
 
 ## 📦 セットアップ
 
@@ -43,6 +46,12 @@ npm run preview
 ```
 kazuhiro_Takamura/
 ├── index.html          # メインHTMLファイル
+├── upload.html         # 作品アップロードページ
+├── api/                # Vercel Functions
+│   ├── upload.js       # 画像アップロードAPI
+│   ├── analyze.js      # Claude AI解析API
+│   ├── approve.js      # 作品承認API
+│   └── works.js        # 作品一覧API
 ├── public/             # 静的ファイル
 │   └── assets/         # 画像アセット
 ├── vite.config.js      # Vite設定
@@ -50,6 +59,19 @@ kazuhiro_Takamura/
 ├── package.json        # 依存関係
 └── .gitignore          # Git除外設定
 ```
+
+## 🔐 環境変数
+
+Vercelダッシュボードで以下の環境変数を設定してください：
+
+| 変数名 | 説明 |
+|--------|------|
+| `ANTHROPIC_API_KEY` | Claude API キー |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob トークン |
+| `KV_REST_API_URL` | Vercel KV URL |
+| `KV_REST_API_TOKEN` | Vercel KV トークン |
+
+⚠️ **注意**: `.env`ファイルは絶対にGitHubにpushしないでください！
 
 ## 🌐 デプロイ
 
