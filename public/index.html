@@ -213,12 +213,21 @@
             align-items: center;
             opacity: 0;
             transform: translateY(50px);
-            transition: all 1s ease;
+            transition: all 1s ease, filter 0.6s ease;
+            filter: brightness(0.92);
         }
 
         .story-section.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        .story-section.bright-step1 {
+            filter: brightness(1.02);
+        }
+
+        .story-section.bright-step2 {
+            filter: brightness(1.12);
         }
 
         .story-container {
@@ -344,8 +353,19 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0;
-            transition: opacity 0.25s ease-out;
+            filter: brightness(0.85);
+            transition: opacity 0.25s ease-out, filter 0.6s ease;
             z-index: 0;
+        }
+
+        .band-bg.bright-step1 {
+            opacity: 0.5;
+            filter: brightness(1.05);
+        }
+
+        .band-bg.bright-step2 {
+            opacity: 0.75;
+            filter: brightness(1.18);
         }
 
         .section-band::before {
@@ -371,6 +391,23 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+        }
+
+        .band-visual {
+            width: min(720px, 80vw);
+            aspect-ratio: 16 / 9;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            margin: 1rem 0 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        .band-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.45));
         }
 
         .quote-large {
@@ -760,19 +797,6 @@
             border-color: var(--gold);
             transform: translateY(-2px);
             background: rgba(255, 255, 255, 0.05);
-        }
-
-        .qualification-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--gold) 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: #ffffff;
-            font-size: 1.2rem;
         }
 
         .qualification-info h5 {
@@ -1608,8 +1632,9 @@
             <div class="band-content">
                 <div class="section-number">02</div>
                 <h2 class="section-title">音楽が繋いだ縁</h2>
+                <div class="band-visual" aria-hidden="true"></div>
                 <p class="quote-large">バンドで出会い、花で繋ぐ。</p>
-                <p class="section-body" style="max-width: 700px; margin: 0 auto;">
+                <p class="section-body" style="max-width: 700px; margin: 1.5rem auto 0;">
                     バンド活動に明け暮れた日々。<br>
                     そこで、人生を共にする人と出会った。<br>
                     二人の娘にも恵まれ、家族という最高のチームができた。
@@ -1714,7 +1739,6 @@
                     <div class="qualification-grid">
                         <!-- 自動車整備士 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">🔧</div>
                             <div class="qualification-info">
                                 <h5>自動車整備士 3級</h5>
                                 <span>原点となる技術者としての基礎</span>
@@ -1723,7 +1747,6 @@
 
                         <!-- 危険物取扱者 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">⚠️</div>
                             <div class="qualification-info">
                                 <h5>危険物取扱者 乙種</h5>
                                 <span>ガソリンスタンド勤務時代に取得</span>
@@ -1732,7 +1755,6 @@
 
                         <!-- 食品衛生管理者 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">🍽️</div>
                             <div class="qualification-info">
                                 <h5>食品衛生管理者</h5>
                                 <span>深夜の飲食店勤務で培った知識</span>
@@ -1741,7 +1763,6 @@
 
                         <!-- 国内ライセンスA級 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">🏁</div>
                             <div class="qualification-info">
                                 <h5>国内ライセンス A級</h5>
                                 <span>JAF公認レーシングライセンス</span>
@@ -1750,7 +1771,6 @@
 
                         <!-- 国際ライセンスA級 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">🌍</div>
                             <div class="qualification-info">
                                 <h5>国際ライセンス A級</h5>
                                 <span>FIA国際レーシングライセンス</span>
@@ -1759,7 +1779,6 @@
 
                         <!-- 歴史検定 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">📜</div>
                             <div class="qualification-info">
                                 <h5>歴史検定 2級</h5>
                                 <span>歴史への探究心が止まらない</span>
@@ -1768,7 +1787,6 @@
 
                         <!-- 宇宙天文検定 -->
                         <div class="qualification-item">
-                            <div class="qualification-icon">⭐</div>
                             <div class="qualification-info">
                                 <h5>宇宙天文検定 3級</h5>
                                 <span>深夜のトラックから見た星空への憧れ</span>
@@ -1803,7 +1821,7 @@
                         <strong>すべての経験が、今ここに咲いている。</strong>
                     </p>
                     <div class="shop-info">
-                        <p class="shop-name">家族で営む花屋 <span class="shop-brand">フラワーさやか</span></p>
+                        <p class="shop-name">家族で営む花屋<br><span class="shop-brand">フラワーさやか</span></p>
                         <p class="shop-detail">想いを花に込めて、届けます。</p>
                     </div>
                 </div>
@@ -1843,6 +1861,14 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    if (!entry.target.classList.contains('bright-step1')) {
+                        setTimeout(() => entry.target.classList.add('bright-step1'), 150);
+                        setTimeout(() => entry.target.classList.add('bright-step2'), 450);
+                    }
+                    if (entry.target.id === 'band-section' && bandBg) {
+                        setTimeout(() => bandBg.classList.add('bright-step1'), 150);
+                        setTimeout(() => bandBg.classList.add('bright-step2'), 450);
+                    }
                 }
             });
         }, observerOptions);
@@ -2152,7 +2178,7 @@
             return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
         }
 
-        // クリック操作
+        // クリック操作（共通）
         if (worksTrack) {
             worksTrack.addEventListener('click', (e) => {
                 const card = e.target.closest('.works-card');
@@ -2161,6 +2187,32 @@
                 if (Number.isNaN(clickedIndex) || clickedIndex === worksIndex) return;
                 worksIndex = clickedIndex;
                 updateWorks();
+            });
+        }
+
+        // モバイルのみスワイプ操作
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        if (worksTrack && isMobile) {
+            let startX = 0;
+            let isDragging = false;
+
+            worksTrack.addEventListener('pointerdown', (e) => {
+                startX = e.clientX;
+                isDragging = true;
+                worksTrack.setPointerCapture(e.pointerId);
+            });
+
+            worksTrack.addEventListener('pointerup', (e) => {
+                if (!isDragging) return;
+                const delta = e.clientX - startX;
+                if (Math.abs(delta) > 40) {
+                    shiftWorks(delta < 0 ? 1 : -1);
+                }
+                isDragging = false;
+            });
+
+            worksTrack.addEventListener('pointercancel', () => {
+                isDragging = false;
             });
         }
 
