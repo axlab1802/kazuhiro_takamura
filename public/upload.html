@@ -527,7 +527,7 @@
     <main class="container">
         <div class="page-title">
             <h1>作品を追加</h1>
-            <p>花の写真をアップロードして、AIがコメントを生成します</p>
+            <p>花の写真をアップロードして、AI高村がコメントを生成します</p>
         </div>
 
         <!-- Steps Indicator -->
@@ -574,7 +574,7 @@
                 <div class="form-group">
                     <label class="form-label">
                         タイトル
-                        <span class="optional">（任意・空欄ならAIが提案）</span>
+                        <span class="optional">（任意・空欄ならAI高村が提案）</span>
                     </label>
                     <input type="text" class="form-input" id="title-input" placeholder="例：春の訪れ">
                 </div>
@@ -642,7 +642,7 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loading-overlay">
         <div class="loading-spinner"></div>
-        <p class="loading-text" id="loading-text">AIが解析中...</p>
+        <p class="loading-text" id="loading-text">AI高村が解析中...</p>
         <p class="loading-subtext" id="loading-subtext">花の特徴を読み取っています</p>
     </div>
 
@@ -797,7 +797,7 @@
                 uploadedImageUrl = uploadResult.url;
 
                 // Step 2: Analyze with AI
-                showLoading('AIが解析中...', '花の特徴を読み取っています');
+                showLoading('AI高村が解析中...', '花の特徴を読み取っています');
                 setStep(2);
 
                 const analyzeResponse = await fetch('/api/analyze', {
@@ -834,7 +834,7 @@
 
         // Regenerate
         regenerateBtn.addEventListener('click', async () => {
-            showLoading('再生成中...', 'AIが新しいコメントを考えています');
+            showLoading('再生成中...', 'AI高村が新しいコメントを考えています');
 
             try {
                 const analyzeResponse = await fetch('/api/analyze', {
