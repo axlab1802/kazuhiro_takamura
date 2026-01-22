@@ -101,8 +101,76 @@
       "id": 1,
       "title": "...",
       "image": "/assets/works/1.JPG",
-      "description": "..."
+      "description": "...",
+      "likes": 0,
+      "commentsCount": 0,
+      "comments": [
+        {
+          "id": 1,
+          "text": "...",
+          "name": "任意",
+          "createdAt": "2026-01-21T00:00:00.000Z"
+        }
+      ]
     }
   ]
 }
+```
+
+## POST /api/like
+作品にいいねを追加する。
+
+### リクエスト
+```json
+{ "id": 1 }
+```
+
+### レスポンス（200）
+```json
+{ "success": true, "likes": 10 }
+```
+
+## POST /api/comment
+作品にコメントを追加する。
+
+### リクエスト
+```json
+{ "id": 1, "text": "素敵です", "name": "任意" }
+```
+
+### レスポンス（200）
+```json
+{ "success": true, "commentsCount": 3 }
+```
+
+## GET /api/admin/works
+管理用に全作品（非表示含む）を取得する。
+
+### レスポンス（200）
+```json
+{ "works": [ { "id": 1, "visible": true } ] }
+```
+
+## PATCH /api/admin/works
+管理用の作品更新。
+
+### リクエスト例
+```json
+{ "action": "update", "id": 1, "title": "新タイトル", "description": "新解説" }
+```
+
+```json
+{ "action": "replace-image", "id": 1, "imageUrl": "https://..." }
+```
+
+```json
+{ "action": "toggle-visibility", "id": 1, "visible": false }
+```
+
+```json
+{ "action": "delete", "id": 1 }
+```
+
+```json
+{ "action": "reorder", "order": [3, 1, 2] }
 ```

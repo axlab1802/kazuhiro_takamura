@@ -12,6 +12,10 @@
 - [x] @vercel/kv を Upstash Redis に置き換え
 - [x] Next.jsへ移行（pages/api と public 配置）
 - [x] Worksセクションの「作品追加」導線を削除し、長押し隠しリンクを追加
+- [x] いいね・コメント機能のAPI実装
+- [x] 作品管理APIと管理画面を追加
+- [x] 作品集にいいね/コメント表示を追加
+- [x] モバイル配色をライト寄りに調整（始まりの章以降）
 
 ## インフラ/運用
 - [ ] Vercel Blob/Upstash Redisの有効化

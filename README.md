@@ -41,6 +41,8 @@ npm run start
 - グラデーション背景とカラーアクセント
 - ギャラリー機能
 - 作品アップロード & AIコメント生成
+- いいね & コメント機能
+- 作品管理画面（編集/並び替え/非表示）
 
 ## 📂 ディレクトリ構造
 
@@ -57,6 +59,7 @@ kazuhiro_Takamura/
 ├── public/             # 静的ファイル
 │   ├── index.html      # メインHTML（静的配信）
 │   ├── upload.html     # 作品アップロードページ
+│   ├── admin.html      # 作品管理ページ
 │   └── assets/         # 画像アセット
 ├── docs/               # 仕様ドキュメント
 ├── next.config.js      # Next.js設定

@@ -924,6 +924,7 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             cursor: pointer;
+            pointer-events: auto;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -965,6 +966,135 @@
             font-weight: 300;
             text-align: justify;
             opacity: 0.9;
+        }
+
+        .works-actions {
+            margin-top: 0.8rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .works-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .works-action:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .works-action-icon {
+            font-size: 0.95rem;
+        }
+
+        .works-action-count {
+            font-variant-numeric: tabular-nums;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .comment-panel {
+            margin-top: 0.8rem;
+            display: none;
+            gap: 0.8rem;
+        }
+
+        .comment-panel.active {
+            display: grid;
+        }
+
+        .comment-list {
+            max-height: 180px;
+            overflow-y: auto;
+            display: grid;
+            gap: 0.6rem;
+            padding: 0.6rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .comment-empty {
+            color: rgba(245, 240, 232, 0.6);
+            font-size: 0.8rem;
+        }
+
+        .comment-item {
+            display: grid;
+            gap: 0.2rem;
+            text-align: left;
+        }
+
+        .comment-meta {
+            font-size: 0.75rem;
+            color: rgba(245, 240, 232, 0.6);
+        }
+
+        .comment-text {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .comment-form {
+            padding: 0.8rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(10, 10, 10, 0.4);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .comment-input::placeholder {
+            color: rgba(245, 240, 232, 0.6);
+        }
+
+        .comment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .comment-cancel,
+        .comment-submit {
+            border: none;
+            border-radius: 999px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .comment-cancel {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-primary);
+        }
+
+        .comment-submit {
+            background: var(--gold);
+            color: #1b1b1b;
         }
 
         .works-nav {
@@ -1263,6 +1393,32 @@
                 padding: 1rem 0;
             }
 
+            .section-origin {
+                background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
+            }
+
+            .origin-bg::after {
+                background: rgba(10, 10, 10, 0.35);
+            }
+
+            .section-band {
+                background: #202020;
+            }
+
+            .section-challenge {
+                background: #1f1f1f;
+            }
+
+            .section-now {
+                background:
+                    radial-gradient(ellipse at 100% 100%, rgba(90, 138, 74, 0.2) 0%, transparent 50%),
+                    #1b1b1b;
+            }
+
+            .section-body {
+                color: rgba(245, 240, 232, 0.9);
+            }
+
             .works-header {
                 margin-bottom: 0.6rem;
             }
@@ -1296,6 +1452,16 @@
             .works-text {
                 font-size: 0.8rem;
                 line-height: 1.5;
+            }
+
+            .works-actions {
+                gap: 0.6rem;
+                margin-top: 0.6rem;
+            }
+
+            .works-action {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.75rem;
             }
 
             .works-nav {
@@ -1379,6 +1545,27 @@
         <div class="works-description" id="works-description">
             <h3 class="works-title-display" id="works-title-display">「覚悟」</h3>
             <p class="works-text" id="works-text"></p>
+            <div class="works-actions">
+                <button class="works-action" id="like-btn" type="button" aria-label="いいね">
+                    <span class="works-action-icon">❤</span>
+                    <span class="works-action-count" id="like-count">0</span>
+                </button>
+                <button class="works-action" id="comment-btn" type="button" aria-label="コメント">
+                    <span class="works-action-icon">💬</span>
+                    <span class="works-action-count" id="comment-count">0</span>
+                </button>
+            </div>
+            <div class="comment-panel" id="comment-panel">
+                <div class="comment-list" id="comment-list"></div>
+                <form class="comment-form" id="comment-form">
+                    <input type="text" class="comment-input" id="comment-name" placeholder="お名前（任意）">
+                    <textarea class="comment-input" id="comment-text" placeholder="コメントを入力" required></textarea>
+                    <div class="comment-actions">
+                        <button type="button" class="comment-cancel" id="comment-cancel">閉じる</button>
+                        <button type="submit" class="comment-submit" id="comment-submit">送信</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="works-nav">
@@ -1677,6 +1864,16 @@
         const worksNext = document.getElementById('works-next');
         const worksTitleDisplay = document.getElementById('works-title-display');
         const worksText = document.getElementById('works-text');
+        const likeBtn = document.getElementById('like-btn');
+        const commentBtn = document.getElementById('comment-btn');
+        const likeCount = document.getElementById('like-count');
+        const commentCount = document.getElementById('comment-count');
+        const commentPanel = document.getElementById('comment-panel');
+        const commentList = document.getElementById('comment-list');
+        const commentForm = document.getElementById('comment-form');
+        const commentName = document.getElementById('comment-name');
+        const commentText = document.getElementById('comment-text');
+        const commentCancel = document.getElementById('comment-cancel');
         const worksSectionTitle = document.querySelector('.works-section-title');
         let worksIndex = 0;
         let worksData = [];
@@ -1711,7 +1908,10 @@
                 src: work.image,
                 title: work.title,
                 description: work.description,
-                id: work.id
+                id: work.id,
+                likes: work.likes || 0,
+                commentsCount: work.commentsCount || 0,
+                comments: Array.isArray(work.comments) ? work.comments : []
             }));
         }
 
@@ -1724,14 +1924,6 @@
                 card.className = 'works-card';
                 card.dataset.index = i;
                 card.innerHTML = `<img src="${work.src}" alt="${work.title}">`;
-                // カードクリックで切り替え
-                card.addEventListener('click', () => {
-                    const clickedIndex = parseInt(card.dataset.index);
-                    if (clickedIndex !== worksIndex) {
-                        worksIndex = clickedIndex;
-                        updateWorks();
-                    }
-                });
                 worksTrack.appendChild(card);
             });
 
@@ -1804,6 +1996,9 @@
                 const current = worksData[worksIndex];
                 worksTitleDisplay.textContent = `「${current.title}」`;
                 worksText.textContent = current.description;
+                if (likeCount) likeCount.textContent = current.likes ?? 0;
+                if (commentCount) commentCount.textContent = current.commentsCount ?? 0;
+                renderComments(current);
             }
         }
 
@@ -1849,28 +2044,123 @@
             if (e.key === 'ArrowLeft') shiftWorks(-1);
         });
 
-        // スワイプ操作
-        if (worksTrack) {
-            let startX = 0;
-            let isDragging = false;
-
-            worksTrack.addEventListener('pointerdown', (e) => {
-                startX = e.clientX;
-                isDragging = true;
-                worksTrack.setPointerCapture(e.pointerId);
-            });
-
-            worksTrack.addEventListener('pointerup', (e) => {
-                if (!isDragging) return;
-                const delta = e.clientX - startX;
-                if (Math.abs(delta) > 50) {
-                    shiftWorks(delta < 0 ? 1 : -1);
+        if (likeBtn) {
+            likeBtn.addEventListener('click', async () => {
+                const current = worksData[worksIndex];
+                if (!current) return;
+                try {
+                    const response = await fetch('/api/like', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: current.id })
+                    });
+                    if (!response.ok) throw new Error('like failed');
+                    const result = await response.json();
+                    current.likes = result.likes;
+                    if (likeCount) likeCount.textContent = result.likes;
+                } catch (error) {
+                    console.error('いいねに失敗しました', error);
                 }
-                isDragging = false;
             });
+        }
 
-            worksTrack.addEventListener('pointercancel', () => {
-                isDragging = false;
+        if (commentBtn) {
+            commentBtn.addEventListener('click', async () => {
+                if (!commentPanel) return;
+                commentPanel.classList.toggle('active');
+                if (commentPanel.classList.contains('active') && commentText) {
+                    commentText.focus();
+                }
+            });
+        }
+
+        if (commentCancel && commentPanel) {
+            commentCancel.addEventListener('click', () => {
+                commentPanel.classList.remove('active');
+            });
+        }
+
+        if (commentForm) {
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const current = worksData[worksIndex];
+                if (!current) return;
+                const textValue = commentText ? commentText.value.trim() : '';
+                if (!textValue) return;
+                try {
+                    const response = await fetch('/api/comment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            id: current.id,
+                            text: textValue,
+                            name: commentName ? commentName.value.trim() : ''
+                        })
+                    });
+                    if (!response.ok) throw new Error('comment failed');
+                    const result = await response.json();
+                    current.commentsCount = result.commentsCount;
+                    if (commentCount) commentCount.textContent = result.commentsCount;
+                    const nextComments = Array.isArray(current.comments) ? current.comments : [];
+                    nextComments.unshift({
+                        id: Date.now(),
+                        text: textValue,
+                        name: commentName ? commentName.value.trim() : '',
+                        createdAt: new Date().toISOString()
+                    });
+                    current.comments = nextComments;
+                    renderComments(current);
+                    if (commentText) commentText.value = '';
+                    if (commentName) commentName.value = '';
+                    commentPanel.classList.remove('active');
+                } catch (error) {
+                    console.error('コメントに失敗しました', error);
+                }
+            });
+        }
+
+        function renderComments(current) {
+            if (!commentList) return;
+            commentList.innerHTML = '';
+            const comments = Array.isArray(current.comments) ? current.comments : [];
+            if (comments.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'comment-empty';
+                empty.textContent = 'コメントはまだありません。';
+                commentList.appendChild(empty);
+                return;
+            }
+            comments.slice(0, 30).forEach((comment) => {
+                const item = document.createElement('div');
+                item.className = 'comment-item';
+                const meta = document.createElement('div');
+                meta.className = 'comment-meta';
+                meta.textContent = comment.name ? `${comment.name} ・ ${formatDate(comment.createdAt)}` : formatDate(comment.createdAt);
+                const text = document.createElement('div');
+                text.className = 'comment-text';
+                text.textContent = comment.text;
+                item.appendChild(meta);
+                item.appendChild(text);
+                commentList.appendChild(item);
+            });
+        }
+
+        function formatDate(value) {
+            if (!value) return '';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // クリック操作
+        if (worksTrack) {
+            worksTrack.addEventListener('click', (e) => {
+                const card = e.target.closest('.works-card');
+                if (!card || !worksTrack.contains(card)) return;
+                const clickedIndex = parseInt(card.dataset.index, 10);
+                if (Number.isNaN(clickedIndex) || clickedIndex === worksIndex) return;
+                worksIndex = clickedIndex;
+                updateWorks();
             });
         }
 

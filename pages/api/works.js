@@ -1,9 +1,4 @@
-import { Redis } from '@upstash/redis';
-
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || process.env.REDIS_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN,
-});
+import { getWorks } from '../../lib/worksStore.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -11,26 +6,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Get works from Redis
-    let works = await redis.get('works');
+    const works = await getWorks();
 
-    // If no works in Redis, return the static JSON data
-    if (!works) {
-      // Fetch from static JSON file
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}` 
-        : 'http://localhost:3000';
-      
-      const response = await fetch(`${baseUrl}/works-data.json`);
-      const data = await response.json();
-      
-      return res.status(200).json({
-        collection: data.collection,
-        works: data.works,
-      });
-    }
-
-    // Return works from KV
+    // Return works from Redis
     return res.status(200).json({
       collection: {
         title: "高村和弘 作品集",

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品管理 | TAKAMURA KAZUHIRO</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+      --text: #f5f0e8;
+      --muted: #8a8578;
+      --gold: #c9a962;
+      --accent: #e67332;
+      --danger: #e74c3c;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Serif JP", serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn.primary { background: var(--accent); border: none; }
+    .btn.danger { background: var(--danger); border: none; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: #111;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 0.5rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    textarea { min-height: 110px; }
+
+    .row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>作品管理</h1>
+  <div class="controls">
+    <button class="btn" id="reload">再読み込み</button>
+    <span class="muted" id="status"></span>
+  </div>
+  <div class="grid" id="works-grid"></div>
+
+  <script>
+    const worksGrid = document.getElementById('works-grid');
+    const statusEl = document.getElementById('status');
+    const reloadBtn = document.getElementById('reload');
+
+    let works = [];
+
+    async function fetchWorks() {
+      const response = await fetch('/api/admin/works');
+      if (!response.ok) throw new Error('fetch failed');
+      const data = await response.json();
+      return data.works || [];
+    }
+
+    async function updateWork(payload) {
+      const response = await fetch('/api/admin/works', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error('update failed');
+      const data = await response.json();
+      return data.works || [];
+    }
+
+    async function uploadImage(file) {
+      const formData = new FormData();
+      formData.append('image', file);
+      const response = await fetch('/api/upload', { method: 'POST', body: formData });
+      if (!response.ok) throw new Error('upload failed');
+      return await response.json();
+    }
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    function renderWorks() {
+      worksGrid.innerHTML = '';
+      works.forEach((work, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${work.image}" alt="${work.title}">
+          <label>タイトル</label>
+          <input type="text" value="${work.title}" data-field="title" data-id="${work.id}">
+          <label>解説</label>
+          <textarea data-field="description" data-id="${work.id}">${work.description}</textarea>
+          <label>画像URL（差し替え）</label>
+          <input type="text" placeholder="https://..." data-field="imageUrl" data-id="${work.id}">
+          <label>画像ファイル（差し替え）</label>
+          <input type="file" accept="image/*" data-field="imageFile" data-id="${work.id}">
+          <div class="row">
+            <button class="btn" data-action="save" data-id="${work.id}">保存</button>
+            <button class="btn" data-action="hide" data-id="${work.id}">${work.visible === false ? '非表示解除' : '非表示'}</button>
+            <button class="btn" data-action="up" data-id="${work.id}">↑</button>
+            <button class="btn" data-action="down" data-id="${work.id}">↓</button>
+            <button class="btn danger" data-action="delete" data-id="${work.id}">削除</button>
+          </div>
+          <div class="muted">いいね: ${work.likes || 0} / コメント: ${work.commentsCount || 0}</div>
+        `;
+        worksGrid.appendChild(card);
+      });
+    }
+
+    worksGrid.addEventListener('click', async (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+      const action = button.dataset.action;
+      const id = button.dataset.id;
+      const index = works.findIndex((w) => String(w.id) === String(id));
+      if (index === -1) return;
+
+      try {
+        if (action === 'save') {
+          const titleInput = worksGrid.querySelector(`input[data-field="title"][data-id="${id}"]`);
+          const descInput = worksGrid.querySelector(`textarea[data-field="description"][data-id="${id}"]`);
+          const urlInput = worksGrid.querySelector(`input[data-field="imageUrl"][data-id="${id}"]`);
+          const fileInput = worksGrid.querySelector(`input[data-field="imageFile"][data-id="${id}"]`);
+
+          if (fileInput && fileInput.files.length > 0) {
+            setStatus('画像アップロード中...');
+            const upload = await uploadImage(fileInput.files[0]);
+            works = await updateWork({ action: 'replace-image', id, imageUrl: upload.url });
+          } else if (urlInput && urlInput.value.trim()) {
+            works = await updateWork({ action: 'replace-image', id, imageUrl: urlInput.value.trim() });
+          }
+
+          works = await updateWork({
+            action: 'update',
+            id,
+            title: titleInput.value,
+            description: descInput.value
+          });
+        }
+
+        if (action === 'hide') {
+          const nextVisible = works[index].visible === false;
+          works = await updateWork({ action: 'toggle-visibility', id, visible: nextVisible });
+        }
+
+        if (action === 'delete') {
+          if (!window.confirm('本当に非表示にしますか？')) return;
+          works = await updateWork({ action: 'delete', id });
+        }
+
+        if (action === 'up' && index > 0) {
+          const order = [...works];
+          [order[index - 1], order[index]] = [order[index], order[index - 1]];
+          works = await updateWork({ action: 'reorder', order: order.map((w) => w.id) });
+        }
+
+        if (action === 'down' && index < works.length - 1) {
+          const order = [...works];
+          [order[index + 1], order[index]] = [order[index], order[index + 1]];
+          works = await updateWork({ action: 'reorder', order: order.map((w) => w.id) });
+        }
+
+        setStatus('保存しました');
+        renderWorks();
+      } catch (error) {
+        console.error(error);
+        setStatus('エラーが発生しました');
+      }
+    });
+
+    reloadBtn.addEventListener('click', async () => {
+      try {
+        setStatus('読み込み中...');
+        works = await fetchWorks();
+        renderWorks();
+        setStatus('');
+      } catch (error) {
+        console.error(error);
+        setStatus('読み込みに失敗しました');
+      }
+    });
+
+    (async () => {
+      try {
+        setStatus('読み込み中...');
+        works = await fetchWorks();
+        renderWorks();
+        setStatus('');
+      } catch (error) {
+        console.error(error);
+        setStatus('読み込みに失敗しました');
+      }
+    })();
+  </script>
+</body>
+</html>

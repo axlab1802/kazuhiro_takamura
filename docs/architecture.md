@@ -15,12 +15,16 @@
 6. 作品集は `/api/works` からRedisデータを取得して表示
 
 ## コンポーネント
-- `index.html`: 作品集/LP表示
+- `public/index.html`: 作品集/LP表示
 - `upload.html`: アップロード/AI生成/承認UI
-- `api/upload.js`: Multipart受信・Blob保存
-- `api/analyze.js`: 画像取得・Claude解析
-- `api/approve.js`: KV保存
-- `api/works.js`: KV読み込み・静的JSONフォールバック
+- `public/admin.html`: 作品管理UI
+- `pages/api/upload.js`: Multipart受信・Blob保存
+- `pages/api/analyze.js`: 画像取得・Gemini解析
+- `pages/api/approve.js`: Redis保存
+- `pages/api/works.js`: Redis読み込み・静的JSONフォールバック
+- `pages/api/like.js`: いいね更新
+- `pages/api/comment.js`: コメント追加
+- `pages/api/admin/works.js`: 作品管理API
 
 ## セキュリティ/運用
 - 環境変数でAPIキーを管理
