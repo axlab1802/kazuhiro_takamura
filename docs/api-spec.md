@@ -174,3 +174,19 @@
 ```json
 { "action": "reorder", "order": [3, 1, 2] }
 ```
+
+## GET /api/admin/systemprompt
+管理用にシステムプロンプトを取得する。
+
+### レスポンス（200）
+```json
+{ "prompt": "..." }
+```
+
+## PUT /api/admin/systemprompt
+管理用にシステムプロンプトを更新する。
+
+### リクエスト
+```json
+{ "prompt": "..." }
+```

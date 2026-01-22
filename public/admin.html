@@ -106,6 +106,14 @@
   <div class="controls">
     <a class="btn" href="/upload.html">アップロードページへ</a>
   </div>
+  <div class="card" style="margin-bottom: 1.5rem;">
+    <label>AI高村 システムプロンプト</label>
+    <textarea id="system-prompt" style="min-height: 220px;"></textarea>
+    <div class="row">
+      <button class="btn primary" id="save-prompt">プロンプトを保存</button>
+      <span class="muted" id="prompt-status"></span>
+    </div>
+  </div>
   <div class="controls">
     <button class="btn" id="reload">再読み込み</button>
     <span class="muted" id="status"></span>
@@ -116,6 +124,9 @@
     const worksGrid = document.getElementById('works-grid');
     const statusEl = document.getElementById('status');
     const reloadBtn = document.getElementById('reload');
+    const promptTextarea = document.getElementById('system-prompt');
+    const promptSaveBtn = document.getElementById('save-prompt');
+    const promptStatus = document.getElementById('prompt-status');
 
     let works = [];
 
@@ -124,6 +135,23 @@
       if (!response.ok) throw new Error('fetch failed');
       const data = await response.json();
       return data.works || [];
+    }
+
+    async function fetchSystemPrompt() {
+      const response = await fetch('/api/admin/systemprompt');
+      if (!response.ok) throw new Error('prompt fetch failed');
+      const data = await response.json();
+      return data.prompt || '';
+    }
+
+    async function saveSystemPrompt(prompt) {
+      const response = await fetch('/api/admin/systemprompt', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+      if (!response.ok) throw new Error('prompt save failed');
+      return true;
     }
 
     async function updateWork(payload) {
@@ -250,12 +278,29 @@
       }
     });
 
+    if (promptSaveBtn) {
+      promptSaveBtn.addEventListener('click', async () => {
+        if (!promptTextarea) return;
+        try {
+          promptStatus.textContent = '保存中...';
+          await saveSystemPrompt(promptTextarea.value);
+          promptStatus.textContent = '保存しました';
+        } catch (error) {
+          console.error(error);
+          promptStatus.textContent = '保存に失敗しました';
+        }
+      });
+    }
+
     (async () => {
       try {
         setStatus('読み込み中...');
         works = await fetchWorks();
         renderWorks();
         setStatus('');
+        if (promptTextarea) {
+          promptTextarea.value = await fetchSystemPrompt();
+        }
       } catch (error) {
         console.error(error);
         setStatus('読み込みに失敗しました');

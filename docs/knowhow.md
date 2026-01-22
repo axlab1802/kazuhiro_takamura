@@ -18,3 +18,7 @@
 ## 4. 管理画面からの画像差し替え
 - 問題: 画像URL差し替えだけだと手元画像を使いづらい
 - 解決: `admin.html` でファイルを `/api/upload` に投げ、返却URLで更新
+
+## 5. システムプロンプトの運用
+- 問題: systemprompt.md を直接編集するとデプロイが必要
+- 解決: `admin.html` から `/api/admin/systemprompt` を通じてRedisに保存し、`/api/analyze` で優先使用

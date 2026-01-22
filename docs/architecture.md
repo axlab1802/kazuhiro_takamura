@@ -25,6 +25,8 @@
 - `pages/api/like.js`: いいね更新
 - `pages/api/comment.js`: コメント追加
 - `pages/api/admin/works.js`: 作品管理API
+- `pages/api/admin/systemprompt.js`: システムプロンプト管理API
+- `lib/systemPromptStore.js`: システムプロンプトのRedis保存とフォールバック
 
 ## セキュリティ/運用
 - 環境変数でAPIキーを管理

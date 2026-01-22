@@ -1,6 +1,5 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getSystemPrompt } from '../../lib/systemPromptStore.js';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -39,7 +38,7 @@ export default async function handler(req, res) {
       ? `タイトルは「${title}」を使用してください。`
       : 'タイトルは5〜10文字程度で、作品の雰囲気を表現するものを提案してください。';
 
-    const baseSystemPrompt = await readFile(join(process.cwd(), 'systemprompt.md'), 'utf-8');
+    const baseSystemPrompt = await getSystemPrompt();
     const systemPrompt = `${baseSystemPrompt.trim()}\n\n---\n\n出力形式（JSON）：\n{\n  \"title\": \"タイトル（5〜10文字）\",\n  \"description\": \"コメント（150〜250文字、高村さんの語り口で）\"\n}\n\n重要：\n- JSONのみを出力してください\n- 説明文やマークダウンは不要です\n- ${titleInstruction}`;
 
     const userPrompt = `この花の写真を見て、高村和弘さんの語り口でコメントを書いてください。${contextStr}${regenerate ? '\n\n※ 前回とは違う視点でコメントを書いてください。' : ''}`;
