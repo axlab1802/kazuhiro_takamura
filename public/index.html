@@ -1019,7 +1019,14 @@
         }
 
         .works-action-icon {
-            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .works-icon {
+            width: 18px;
+            height: 18px;
         }
 
         .works-action-count {
@@ -1571,11 +1578,19 @@
             <p class="works-text" id="works-text"></p>
             <div class="works-actions">
                 <button class="works-action" id="like-btn" type="button" aria-label="いいね">
-                    <span class="works-action-icon">❤</span>
+                    <span class="works-action-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="works-icon" role="img" focusable="false">
+                            <path d="M12 20.5s-7-4.5-9-8.5C1.5 8.5 3.5 6 6.5 6c2 0 3.5 1.2 4.5 2.6C12 7.2 13.5 6 15.5 6c3 0 5 2.5 3.5 6-2 4-9 8.5-9 8.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
                     <span class="works-action-count" id="like-count">0</span>
                 </button>
                 <button class="works-action" id="comment-btn" type="button" aria-label="コメント">
-                    <span class="works-action-icon">💬</span>
+                    <span class="works-action-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" class="works-icon" role="img" focusable="false">
+                            <path d="M4.5 5.5h15v10h-8l-4.5 3v-3h-2.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
                     <span class="works-action-count" id="comment-count">0</span>
                 </button>
             </div>
