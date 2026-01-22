@@ -64,6 +64,12 @@
             color: var(--text-primary);
         }
 
+        .header-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
         /* Main Container */
         .container {
             max-width: 800px;
@@ -512,7 +518,10 @@
 <body>
     <header class="header">
         <a href="/" class="header-logo">髙村 和弘</a>
-        <a href="/" class="header-back">← サイトに戻る</a>
+        <div class="header-links">
+            <a href="/admin.html" class="header-back">管理ページへ</a>
+            <a href="/" class="header-back">← サイトに戻る</a>
+        </div>
     </header>
 
     <main class="container">
