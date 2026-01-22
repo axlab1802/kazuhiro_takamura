@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAKAMURA KAZUHIRO | Floral Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;500;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0a0a;
+            --bg-dark: #141414;
+            --text-primary: #f5f0e8;
+            --text-muted: #8a8578;
+            --accent-magenta: #c43d7a;
+            --accent-orange: #e67332;
+            --accent-green: #5a8a4a;
+            --accent-purple: #7a4a8a;
+            --gold: #c9a962;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-magenta);
+        }
+
+        /* Grain Overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(196, 61, 122, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(90, 138, 74, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(230, 115, 50, 0.05) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 2rem;
+        }
+
+        .hero-year {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            letter-spacing: 0.5em;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.5s forwards;
+        }
+
+        .hero-name {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 900;
+            font-size: clamp(2.5rem, 10vw, 7rem);
+            letter-spacing: 0.1em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.8s forwards;
+        }
+
+        .hero-name span {
+            display: block;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold) 50%, var(--text-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-style: italic;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.1s forwards;
+        }
+
+        .hero-catchcopy {
+            margin-top: 3rem;
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 300;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            letter-spacing: 0.15em;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.4s forwards;
+        }
+
+        .hero-image {
+            margin-top: 2.5rem;
+            width: min(70vw, 520px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: contrast(1.1) brightness(1.05);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 2s forwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent-magenta), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        /* Vertical Text */
+        .vertical-text {
+            position: fixed;
+            writing-mode: vertical-rl;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+            z-index: 100;
+        }
+
+        .vertical-left {
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .vertical-right {
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Story Sections */
+        .story-section {
+            min-height: 100vh;
+            padding: 10vh 5vw;
+            position: relative;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .story-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Section: Origin */
+        .section-origin {
+            position: relative;
+            overflow: hidden;
+            background: 
+                linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
+        }
+
+        .origin-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('/assets/homeroom.JPG');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            transition: opacity 0.2s linear;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .origin-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.55);
+        }
+
+        .section-origin .story-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .origin-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .origin-text {
+            padding-right: 2rem;
+        }
+
+        .section-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 8rem;
+            font-weight: 300;
+            color: var(--accent-magenta);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: -2rem;
+        }
+
+        .section-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .section-body {
+            font-size: 1.1rem;
+            line-height: 2.2;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .section-body strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .origin-visual {
+            position: relative;
+        }
+
+        .age-display {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15rem;
+            font-weight: 300;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--accent-orange);
+            line-height: 1;
+            position: relative;
+        }
+
+        .age-label {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+        }
+
+        /* Section: Band & Love */
+        .section-band {
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .band-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/assets/band2.JPG');
+            background-size: 66% auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.25s ease-out;
+            z-index: 0;
+        }
+
+        .section-band::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 100px,
+                    rgba(196, 61, 122, 0.03) 100px,
+                    rgba(196, 61, 122, 0.03) 101px
+                );
+            z-index: 1;
+        }
+
+        .band-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .quote-large {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .quote-large::before,
+        .quote-large::after {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 6rem;
+            color: var(--accent-magenta);
+            opacity: 0.5;
+            position: absolute;
+        }
+
+        .quote-large::before {
+            top: -2rem;
+            left: -3rem;
+        }
+
+        .quote-large::after {
+            bottom: -4rem;
+            right: -3rem;
+        }
+
+        .timeline-horizontal {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '→';
+            position: absolute;
+            right: -2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-magenta);
+            font-size: 1.5rem;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+        }
+
+        /* Section: Challenge */
+        .section-challenge {
+            background: 
+                radial-gradient(ellipse at 0% 50%, rgba(230, 115, 50, 0.1) 0%, transparent 50%),
+                var(--bg-deep);
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .challenge-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .challenge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-magenta), var(--accent-orange));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .challenge-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Challenge Card with Driver Background */
+        .challenge-card-driver {
+            position: relative;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .challenge-card-driver .card-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            filter: grayscale(20%);
+            transition: opacity 0.5s ease;
+        }
+
+        .challenge-card-driver:hover .card-bg-image {
+            opacity: 0.5;
+        }
+
+        .challenge-card-driver .card-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.7) 0%, rgba(40, 30, 35, 0.65) 100%);
+        }
+
+        /* Special Challenge Card (with background image) */
+        .challenge-card-special {
+            grid-column: 1 / -1;
+            display: flex;
+            position: relative;
+            padding: 0;
+            min-height: 400px;
+            background: transparent;
+            border: none;
+        }
+
+        .challenge-card-special .card-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            filter: grayscale(20%);
+            transition: opacity 0.5s ease;
+        }
+
+        .challenge-card-special:hover .card-bg-image {
+            opacity: 0.7;
+        }
+
+        .challenge-card-special .card-content {
+            position: relative;
+            z-index: 1;
+            padding: 3rem;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.7) 0%, rgba(40, 30, 35, 0.65) 100%);
+            border: 1px solid rgba(196, 61, 122, 0.3);
+        }
+
+        .challenge-card-special .card-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-desc-story {
+            font-size: 1rem;
+            line-height: 2;
+            text-align: left;
+            max-width: 600px;
+        }
+
+        .card-desc-story em {
+            color: var(--gold);
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .story-highlight {
+            display: inline-block;
+            color: var(--accent-magenta);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Qualifications Section */
+        .qualifications-section {
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .qualifications-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .qualifications-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .qualifications-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .qualifications-title-en {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .qualifications-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.5rem auto;
+        }
+
+        .main-qualification-card {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(26, 37, 47, 0.95) 100%);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(196, 61, 122, 0.3);
+        }
+
+        .main-qualification-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(201, 169, 98, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .qualification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gold);
+            color: var(--bg-deep);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-qualification-card h3 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .main-qualification-card .message {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            line-height: 2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-qualification-card .message p {
+            margin-bottom: 1rem;
+        }
+
+        .main-qualification-card .message .highlight {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .main-qualification-card .signature {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .other-qualifications {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .other-qualifications h4 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .other-qualifications h4::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        .other-qualifications .subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            padding-left: 1rem;
+        }
+
+        .qualification-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .qualification-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .qualification-item:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .qualification-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-magenta) 0%, var(--gold) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .qualification-info h5 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .qualification-info span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .qualifications-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-quote {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-quote-en {
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            font-weight: 300;
+        }
+
+        @media (max-width: 768px) {
+            .qualifications-section {
+                margin-top: 2rem;
+                padding-top: 2rem;
+            }
+
+            .main-qualification-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .other-qualifications {
+                padding: 2rem 1.5rem;
+            }
+
+            .qualification-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .challenge-card-special {
+                min-height: auto;
+            }
+            
+            .challenge-card-special .card-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .card-desc-story {
+                font-size: 0.9rem;
+                line-height: 1.9;
+            }
+        }
+
+        /* Section: Works - Vision Pro Style */
+        .section-works {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .works-header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-bottom: clamp(0.8rem, 2.5vh, 2rem);
+        }
+
+        .works-section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            color: var(--text-primary);
+            letter-spacing: 0.2em;
+            margin-bottom: 0.3rem;
+        }
+
+        .works-section-subtitle {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--gold);
+            letter-spacing: 0.3em;
+        }
+
+        .works-bg {
+            position: absolute;
+            inset: 0;
+            background: url('/assets/back.jpg') center/cover no-repeat;
+            filter: blur(8px);
+            transform: scale(1.1);
+            z-index: 0;
+        }
+
+        .works-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .works-carousel {
+            position: relative;
+            width: 100%;
+            height: min(70vh, 620px);
+            min-height: 500px;
+            margin-top: clamp(0.4rem, 2vh, 1.2rem);
+            perspective: 1200px;
+            z-index: 2;
+        }
+
+        .works-track {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .works-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 320px;
+            height: 420px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .works-card.active {
+            width: 380px;
+            height: 500px;
+            z-index: 10;
+        }
+
+        .works-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .works-description {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            margin: 1rem auto 0;
+            padding: 0.8rem 1.5rem;
+            text-align: center;
+        }
+
+        .works-title-display {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .works-text {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
+            line-height: 1.7;
+            color: var(--text-primary);
+            font-weight: 300;
+            text-align: justify;
+            opacity: 0.9;
+        }
+
+        .works-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 10;
+            margin-top: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .works-nav button {
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .works-nav button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+
+        .works-dots {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            z-index: 10;
+        }
+
+        .works-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .works-dot.active {
+            background: #8B9A6D;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(196, 61, 122, 0.3) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Section: Now */
+        .section-now {
+            background: 
+                radial-gradient(ellipse at 100% 100%, rgba(90, 138, 74, 0.15) 0%, transparent 50%),
+                var(--bg-deep);
+            min-height: 100vh;
+        }
+
+        .now-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .now-visual {
+            position: relative;
+        }
+
+        .flower-frame {
+            width: 100%;
+            aspect-ratio: 3/4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flower-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .flower-frame::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1px solid var(--gold);
+            z-index: -1;
+        }
+
+        .now-text .section-title {
+            color: var(--gold);
+        }
+
+        .shop-info {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(201, 169, 98, 0.05);
+            border-left: 2px solid var(--gold);
+        }
+
+        .shop-name {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .shop-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--gold);
+            margin-left: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .shop-detail {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Final Section */
+        .section-final {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: 
+                radial-gradient(ellipse at 50% 50%, rgba(196, 61, 122, 0.1) 0%, transparent 50%),
+                var(--bg-deep);
+        }
+
+        .final-message {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            line-height: 2;
+        }
+
+        .final-message .highlight {
+            display: inline-block;
+            position: relative;
+            color: var(--gold);
+        }
+
+        .final-message .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* Mada Section */
+        .section-mada {
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-deep);
+        }
+
+        .mada-content {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .mada-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        .section-mada .section-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scaleY(0.8);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .origin-content,
+            .now-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+            .gallery-item:nth-child(4) { grid-column: span 1; }
+
+            .vertical-text {
+                display: none;
+            }
+
+            .timeline-horizontal {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .timeline-item::after {
+                content: '↓';
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: -1.5rem;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding-top: 4rem;
+                padding-bottom: 3rem;
+            }
+            
+            .hero-image {
+                width: 70vw;
+                max-width: 320px;
+                min-width: 220px;
+            }
+            
+            .scroll-indicator {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                transform: none;
+                margin-top: 2rem;
+            }
+
+            .section-works {
+                padding: 1rem 0;
+            }
+
+            .works-header {
+                margin-bottom: 0.6rem;
+            }
+
+            .works-carousel {
+                height: 44vh;
+                min-height: 280px;
+                margin-top: 0.3rem;
+            }
+
+            .works-card {
+                width: min(65vw, 260px);
+                height: min(50vh, 340px);
+            }
+
+            .works-card.active {
+                width: min(70vw, 300px);
+                height: min(55vh, 380px);
+            }
+
+            .works-description {
+                margin: 0.3rem 1rem 0;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .works-title-display {
+                font-size: 1.1rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .works-text {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+
+            .works-nav {
+                margin-top: 0.8rem;
+                padding: 0.5rem 1rem;
+                gap: 1rem;
+            }
+
+            .works-nav button {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
+            }
+
+            .works-dot {
+                width: 5px;
+                height: 5px;
+            }
+
+            .section-number {
+                font-size: 5rem;
+            }
+
+            .age-display {
+                font-size: 8rem;
+            }
+
+            .quote-large::before,
+            .quote-large::after {
+                font-size: 3rem;
+            }
+
+            .quote-large::before {
+                left: 0;
+            }
+
+            .quote-large::after {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+
+    <div class="vertical-text vertical-left">TAKAMURA KAZUHIRO — FLORAL DESIGNER</div>
+    <div class="vertical-text vertical-right">回り道の先に、花が咲いた。</div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-year">SINCE 1977s — CHIBA, JAPAN</p>
+            <h1 class="hero-name"><span>髙村 和弘</span></h1>
+            <p class="hero-tagline">Floral Designer</p>
+            <p class="hero-catchcopy">回り道の先に、花が咲いた。</p>
+            <div class="hero-image" id="hero-image">
+                <img src="/assets/kazutakamura.png" alt="髙村 和弘 ">
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Works -->
+    <section class="section-works" id="works-section">
+        <div class="works-bg"></div>
+        <div class="works-overlay"></div>
+        
+        <div class="works-header">
+            <h2 class="works-section-title">Works</h2>
+            <p class="works-section-subtitle">— 作品集 —</p>
+        </div>
+
+        <div class="works-carousel">
+            <div class="works-track" id="works-track"></div>
+        </div>
+
+        <div class="works-description" id="works-description">
+            <h3 class="works-title-display" id="works-title-display">「覚悟」</h3>
+            <p class="works-text" id="works-text"></p>
+        </div>
+
+        <div class="works-nav">
+            <button id="works-prev" aria-label="前へ">‹</button>
+            <div class="works-dots" id="works-dots"></div>
+            <button id="works-next" aria-label="次へ">›</button>
+        </div>
+    </section>
+
+    <!-- Origin -->
+    <section class="story-section section-origin">
+        <div class="origin-bg" id="origin-bg"></div>
+        <div class="story-container">
+            <div class="origin-content">
+                <div class="origin-text">
+                    <div class="section-number">01</div>
+                    <h2 class="section-title">始まりの章</h2>
+                    <p class="section-body">
+                        中学卒業とともに、<strong>15歳で社会へ飛び出した。</strong><br><br>
+                        進学という選択肢は取らなかった。<br>
+                        周りとは違う道。でも、それが自分の道だった。<br><br>
+                        働きながら生きること。<br>
+                        それは、教科書では学べない人生の授業だった。
+                    </p>
+                </div>
+                <div class="origin-visual">
+                    <div class="age-display">
+                        15
+                        <span class="age-label">歳で社会へ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Band & Love -->
+    <section class="story-section section-band" id="band-section">
+        <div class="band-bg" id="band-bg"></div>
+        <div class="story-container">
+            <div class="band-content">
+                <div class="section-number">02</div>
+                <h2 class="section-title">音楽が繋いだ縁</h2>
+                <p class="quote-large">バンドで出会い、花で繋ぐ。</p>
+                <p class="section-body" style="max-width: 700px; margin: 0 auto;">
+                    バンド活動に明け暮れた日々。<br>
+                    そこで、人生を共にする人と出会った。<br>
+                    二人の娘にも恵まれ、家族という最高のチームができた。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenge -->
+    <section class="story-section section-challenge">
+        <div class="story-container">
+            <div class="section-number" style="text-align: center;">03</div>
+            <h2 class="section-title" style="text-align: center; margin-bottom: 4rem;">挑戦の軌跡</h2>
+            <div class="challenge-grid">
+                <div class="challenge-card challenge-card-driver">
+                    <div class="card-bg-image" style="background-image: url('/assets/seibi.jpg')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">自動車整備士</h3>
+                        <p class="card-desc">
+                            飯岡中学を出てすぐ、地元の整備工場に飛び込んだ。<br>
+                            親方に叩き込まれながら、整備士3級を取得。<br>
+                            油まみれの手で学んだ技術と誇りは、今も俺の原点だ。
+                        </p>
+                    </div>
+                </div>
+                <div class="challenge-card challenge-card-driver">
+                    <div class="card-bg-image" style="background-image: url('/assets/stand.jpg')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">ガソリンスタンド</h3>
+                        <p class="card-desc">
+                            この頃始めたバンドで嫁さんに出会った。<br>
+                            がむしゃらに働いた。<br>
+                            夜明け前に見上げた星空が、今も胸に残ってる。
+                        </p>
+                    </div>
+                </div>
+                <div class="challenge-card challenge-card-driver">
+                    <div class="card-bg-image" style="background-image: url('/assets/driver.jpg')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">大型トラックドライバー</h3>
+                    <p class="card-desc">
+                        荷物を届ける仕事。<br>
+                        人の想いを届ける仕事。<br>
+                        この経験が、今に繋がっている。
+                    </p>
+                </div>
+                </div>
+                <div class="challenge-card challenge-card-special">
+                    <div class="card-bg-image" style="background-image: url('/assets/goukaku.JPG')"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">フラワーデザイナー1級</h3>
+                        <p class="card-desc card-desc-story">
+                            <span class="story-highlight">8回目の挑戦で、ついに掴んだ。</span><br><br>
+                            何度も落ちた。何度も心が折れそうになった。<br>
+                            でも、どうしても諦められなかった。<br><br>
+                            中学時代、誰よりも自分を信じてくれた恩師がいた。<br>
+                            「今までのことは決して無駄になることはないから、ゆっくりね」——その言葉が、<br>
+                            何度も俺を立ち上がらせた。<br><br>
+                            <em>いつか、自分の花を届けたい。</em><br>
+                            <em>1級の腕で、最高の花を。</em><br><br>
+                            8年越しの想いが、ようやく形になった日。<br>
+                            <span class="story-highlight">涙が止まらなかった。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+            <!-- Qualifications Section -->
+            <div class="qualifications-section">
+                <div class="qualifications-header">
+                    <p class="qualifications-label">Qualifications</p>
+                    <h2 class="qualifications-title">資格取得</h2>
+                    <p class="qualifications-title-en">NEVER TOO LATE TO LEARN</p>
+                    <div class="qualifications-divider"></div>
+            </div>
+
+                <!-- メイン資格：高卒認定 -->
+                <div class="main-qualification-card">
+                    <div class="qualification-badge">
+                        <span>MILESTONE</span>
+                </div>
+                    <h3>高卒認定取得</h3>
+                    <div class="message">
+                        <p>娘たちを育てながら、自分自身の学びに向き合った。</p>
+                        <p>深夜のトラックを降りて、子どもたちを寝かしつけてから開く参考書。<br>
+                        眠い目をこすりながら解いた問題集。<br>
+                        何度も心が折れそうになった。</p>
+                        <p>でも、娘たちに見せたかったんだ。<br>
+                        <span class="highlight">「何歳からでも、遅くない」</span>ってことを。</p>
+                        <p>父親の背中で、それを証明したかった。</p>
+                        <div class="signature">
+                            — 妻と娘たちへの、約束を果たすために
+                </div>
+                </div>
+                </div>
+
+                <!-- その他の資格 -->
+                <div class="other-qualifications">
+                    <h4>その他取得した資格</h4>
+                    <p class="subtitle">整備士からドライバー、そしてフラワーデザイナーへ。すべての経験が、今の俺を作っている。</p>
+
+                    <div class="qualification-grid">
+                        <!-- 自動車整備士 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🔧</div>
+                            <div class="qualification-info">
+                                <h5>自動車整備士 3級</h5>
+                                <span>原点となる技術者としての基礎</span>
+                </div>
+                </div>
+
+                        <!-- 危険物取扱者 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">⚠️</div>
+                            <div class="qualification-info">
+                                <h5>危険物取扱者 乙種</h5>
+                                <span>ガソリンスタンド勤務時代に取得</span>
+                            </div>
+                        </div>
+
+                        <!-- 食品衛生管理者 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🍽️</div>
+                            <div class="qualification-info">
+                                <h5>食品衛生管理者</h5>
+                                <span>深夜の飲食店勤務で培った知識</span>
+                            </div>
+                        </div>
+
+                        <!-- 国内ライセンスA級 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🏁</div>
+                            <div class="qualification-info">
+                                <h5>国内ライセンス A級</h5>
+                                <span>JAF公認レーシングライセンス</span>
+                            </div>
+                        </div>
+
+                        <!-- 国際ライセンスA級 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">🌍</div>
+                            <div class="qualification-info">
+                                <h5>国際ライセンス A級</h5>
+                                <span>FIA国際レーシングライセンス</span>
+                            </div>
+                        </div>
+
+                        <!-- 歴史検定 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">📜</div>
+                            <div class="qualification-info">
+                                <h5>歴史検定 2級</h5>
+                                <span>歴史への探究心が止まらない</span>
+                            </div>
+                        </div>
+
+                        <!-- 宇宙天文検定 -->
+                        <div class="qualification-item">
+                            <div class="qualification-icon">⭐</div>
+                            <div class="qualification-info">
+                                <h5>宇宙天文検定 3級</h5>
+                                <span>深夜のトラックから見た星空への憧れ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Now -->
+    <section class="story-section section-now">
+        <div class="story-container">
+            <div class="now-content">
+                <div class="now-visual">
+                    <div class="flower-frame">
+                        <img src="/assets/IMG_0100.JPG" alt="代表作品">
+                    </div>
+                </div>
+                <div class="now-text">
+                    <div class="section-number">04</div>
+                    <h2 class="section-title">現在地</h2>
+                    <p class="section-body">
+                        今、家族とともに花屋を営んでいる。<br><br>
+                        15歳で社会に出て、<br>
+                        バンドで人生の伴侶と出会い、<br>
+                        運送の仕事で「届ける」ことを学び、<br>
+                        高卒認定で「学ぶ」ことを知り、<br>
+                        フラワーデザイナーとして「表現する」ことを手にした。<br><br>
+                        <strong>すべての経験が、今ここに咲いている。</strong>
+                    </p>
+                    <div class="shop-info">
+                        <p class="shop-name">家族で営む花屋 <span class="shop-brand">フラワーさやか</span></p>
+                        <p class="shop-detail">想いを花に込めて、届けます。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final -->
+    <section class="section-final">
+        <div class="final-content">
+            <p class="final-message">
+                まっすぐじゃなくていい。<br>
+                <span class="highlight">花は、どこでも咲く。</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Mada -->
+    <section class="section-mada">
+        <div class="mada-content">
+            <img src="/assets/band.png" alt="俺ってまだでしょ？" class="mada-image">
+        </div>
+        <div class="section-footer">
+            <p class="footer-quote">「俺ってまだでしょ？」</p>
+            <p class="footer-quote-en">I'M JUST GETTING STARTED.</p>
+        </div>
+    </section>
+
+    <script>
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.story-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Scroll Effects for Background Images
+        const originSection = document.querySelector('.section-origin');
+        const originBg = document.getElementById('origin-bg');
+        const bandSection = document.getElementById('band-section');
+        const bandBg = document.getElementById('band-bg');
+
+        // Works Gallery
+        const worksTrack = document.getElementById('works-track');
+        const worksDots = document.getElementById('works-dots');
+        const worksPrev = document.getElementById('works-prev');
+        const worksNext = document.getElementById('works-next');
+        const worksTitleDisplay = document.getElementById('works-title-display');
+        const worksText = document.getElementById('works-text');
+        const worksSectionTitle = document.querySelector('.works-section-title');
+        let worksIndex = 0;
+        let worksData = [];
+
+        // APIから作品データを読み込み（失敗時はJSONにフォールバック）
+        async function loadWorksData() {
+            try {
+                const apiResponse = await fetch('/api/works');
+                if (apiResponse.ok) {
+                    const data = await apiResponse.json();
+                    worksData = normalizeWorks(data.works);
+                    initWorks();
+                    return;
+                }
+                throw new Error('API request failed');
+            } catch (error) {
+                console.error('作品データの読み込みに失敗しました:', error);
+                try {
+                    const response = await fetch('/works-data.json');
+                    const data = await response.json();
+                    worksData = normalizeWorks(data.works);
+                    initWorks();
+                } catch (fallbackError) {
+                    console.error('フォールバックの読み込みに失敗しました:', fallbackError);
+                    worksData = [];
+                }
+            }
+        }
+
+        function normalizeWorks(works = []) {
+            return works.map(work => ({
+                src: work.image,
+                title: work.title,
+                description: work.description,
+                id: work.id
+            }));
+        }
+
+        function initWorks() {
+            if (!worksTrack) return;
+
+            // カードを生成
+            worksData.forEach((work, i) => {
+                const card = document.createElement('div');
+                card.className = 'works-card';
+                card.dataset.index = i;
+                card.innerHTML = `<img src="${work.src}" alt="${work.title}">`;
+                // カードクリックで切り替え
+                card.addEventListener('click', () => {
+                    const clickedIndex = parseInt(card.dataset.index);
+                    if (clickedIndex !== worksIndex) {
+                        worksIndex = clickedIndex;
+                        updateWorks();
+                    }
+                });
+                worksTrack.appendChild(card);
+            });
+
+            // ドットはupdateWorksで動的に生成するため、ここでは作成しない
+
+            updateWorks();
+        }
+
+        function updateWorks() {
+            const cards = worksTrack.querySelectorAll('.works-card');
+            const total = worksData.length;
+
+            cards.forEach((card, i) => {
+                let offset = i - worksIndex;
+                
+                // 循環処理
+                if (offset > total / 2) offset -= total;
+                if (offset < -total / 2) offset += total;
+
+                const abs = Math.abs(offset);
+                const isActive = offset === 0;
+                const isVisible = abs <= 3;
+
+                // 位置計算
+                const translateX = offset * 280;
+                const rotateY = offset * -25;
+                const translateZ = isActive ? 100 : -100 - abs * 100;
+                const scale = isActive ? 1 : 0.75 - abs * 0.1;
+                const opacity = isVisible ? (isActive ? 1 : 0.7 - abs * 0.15) : 0;
+
+                card.classList.toggle('active', isActive);
+                card.style.opacity = opacity;
+                card.style.zIndex = isActive ? 10 : 5 - abs;
+                card.style.transform = `translate(-50%, -50%) translateX(${translateX}px) rotateY(${rotateY}deg) translateZ(${translateZ}px) scale(${scale})`;
+            });
+
+            // ドット更新（現在の位置の前後3個ずつ、最大7個表示）
+            if (worksDots) {
+                worksDots.innerHTML = ''; // 既存のドットをクリア
+                const total = worksData.length;
+                const maxDots = 7; // 最大表示数
+                const range = Math.floor(maxDots / 2); // 前後の範囲
+                
+                let startIndex = Math.max(0, worksIndex - range);
+                let endIndex = Math.min(total - 1, worksIndex + range);
+                
+                // 表示範囲を調整（端に近い場合は反対側から補完）
+                if (endIndex - startIndex < maxDots - 1) {
+                    if (startIndex === 0) {
+                        endIndex = Math.min(total - 1, maxDots - 1);
+                    } else if (endIndex === total - 1) {
+                        startIndex = Math.max(0, total - maxDots);
+                    }
+                }
+                
+                for (let i = startIndex; i <= endIndex; i++) {
+                    const dot = document.createElement('span');
+                    dot.className = 'works-dot';
+                    if (i === worksIndex) dot.classList.add('active');
+                    dot.addEventListener('click', () => {
+                        worksIndex = i;
+                        updateWorks();
+                    });
+                    worksDots.appendChild(dot);
+                }
+            }
+
+            // 解説パネル更新
+            if (worksTitleDisplay && worksText && worksData[worksIndex]) {
+                const current = worksData[worksIndex];
+                worksTitleDisplay.textContent = `「${current.title}」`;
+                worksText.textContent = current.description;
+            }
+        }
+
+        function shiftWorks(dir) {
+            worksIndex = (worksIndex + dir + worksData.length) % worksData.length;
+            updateWorks();
+        }
+
+        // 初期化（JSONからデータを読み込む）
+        loadWorksData();
+
+        // Hidden admin link: long-press "Works" for 2s
+        if (worksSectionTitle) {
+            let pressTimer = null;
+            const trigger = () => {
+                window.location.href = '/upload.html';
+            };
+
+            const startPress = () => {
+                pressTimer = window.setTimeout(trigger, 2000);
+            };
+
+            const cancelPress = () => {
+                if (pressTimer) {
+                    clearTimeout(pressTimer);
+                    pressTimer = null;
+                }
+            };
+
+            worksSectionTitle.addEventListener('pointerdown', startPress);
+            worksSectionTitle.addEventListener('pointerup', cancelPress);
+            worksSectionTitle.addEventListener('pointerleave', cancelPress);
+            worksSectionTitle.addEventListener('pointercancel', cancelPress);
+        }
+
+        // ボタンイベント
+        if (worksPrev) worksPrev.addEventListener('click', () => shiftWorks(-1));
+        if (worksNext) worksNext.addEventListener('click', () => shiftWorks(1));
+
+        // キーボード操作
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') shiftWorks(1);
+            if (e.key === 'ArrowLeft') shiftWorks(-1);
+        });
+
+        // スワイプ操作
+        if (worksTrack) {
+            let startX = 0;
+            let isDragging = false;
+
+            worksTrack.addEventListener('pointerdown', (e) => {
+                startX = e.clientX;
+                isDragging = true;
+                worksTrack.setPointerCapture(e.pointerId);
+            });
+
+            worksTrack.addEventListener('pointerup', (e) => {
+                if (!isDragging) return;
+                const delta = e.clientX - startX;
+                if (Math.abs(delta) > 50) {
+                    shiftWorks(delta < 0 ? 1 : -1);
+                }
+                isDragging = false;
+            });
+
+            worksTrack.addEventListener('pointercancel', () => {
+                isDragging = false;
+            });
+        }
+
+        function handleScrollEffects() {
+            const scrolled = window.pageYOffset;
+            const viewportHeight = window.innerHeight;
+
+            // 始まりの章の背景
+            if (originSection && originBg) {
+                const rect = originSection.getBoundingClientRect();
+                const progress = Math.min(
+                    1,
+                    Math.max(0, (viewportHeight - rect.top) / (rect.height + viewportHeight))
+                );
+                const maxOpacity = 0.7;
+                originBg.style.opacity = (1 - progress) * maxOpacity;
+            }
+
+            // バンドセクションの背景
+            if (bandSection && bandBg) {
+                const rect = bandSection.getBoundingClientRect();
+                const progress = Math.min(
+                    1,
+                    Math.max(0, (viewportHeight - rect.top) / (rect.height + viewportHeight))
+                );
+                const maxOpacity = 0.7;
+                bandBg.style.opacity = progress * maxOpacity;
+            }
+
+            // Parallax effect for vertical text
+            const verticalTexts = document.querySelectorAll('.vertical-text');
+            verticalTexts.forEach(text => {
+                text.style.transform = `translateY(calc(-50% + ${scrolled * 0.1}px))`;
+            });
+        }
+
+        window.addEventListener('scroll', handleScrollEffects);
+        handleScrollEffects();
+
+        // Smooth scroll for hero indicator
+        document.querySelector('.scroll-indicator').addEventListener('click', () => {
+            const target = document.getElementById('works-section') || document.querySelector('.section-origin');
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

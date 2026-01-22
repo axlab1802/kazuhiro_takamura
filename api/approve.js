@@ -1,4 +1,9 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || process.env.REDIS_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN,
+});
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -12,8 +17,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // Get current works from KV
-    let works = await kv.get('works');
+    // Get current works from Redis
+    let works = await redis.get('works');
     
     // If no works exist yet, initialize from the JSON file
     if (!works) {
@@ -39,8 +44,8 @@ export default async function handler(req, res) {
     // Add to beginning of array (newest first)
     works.unshift(newWork);
 
-    // Save to KV
-    await kv.set('works', works);
+    // Save to Redis
+    await redis.set('works', works);
 
     return res.status(200).json({
       success: true,

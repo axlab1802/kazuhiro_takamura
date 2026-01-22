@@ -20,3 +20,31 @@ xport const WORKS: Product[] = [
   { id: 'w14', name: '永遠の絆', price: 0, image: "/assets/14.JPG", comment: "固く結ばれた絆は、どんな時も解けることはありません。" },
   { id: 'w15', name: '未来への希望', price: 0, image: "/assets/15.JPG", comment: "前を向いて歩き出すあなたへ。明るい未来を照らす光となりますように。" }
 ];
+
+
+
+実装状況
+feature/upload-ai ブランチにプッシュしたナリ！Vercelが自動でプレビューURLを生成するはずナリ！
+作成したファイル：
+ファイル	説明
+upload.html	アップロード専用ページ（ステップ表示、ドラッグ&ドロップ対応）
+api/upload.js	画像をVercel Blobにアップロード
+api/analyze.js	Gemini 3.0 Flashで画像解析・コメント生成
+api/approve.js	承認後にUpstash Redisへ保存
+api/works.js	作品一覧取得API
+次にやること（Vercelダッシュボードで）：
+Vercel Blob を有効化
+Project Settings → Storage → Connect Database → Blob
+Upstash Redis を有効化
+Project Settings → Storage → Marketplace → Redis（Upstash）
+環境変数を設定
+GEMINI_API_KEY - Gemini APIキー
+Blob/Redisは接続すると自動で環境変数が追加される
+プレビューURLでテスト
+Vercelが生成したプレビューURL（xxx-git-feature-upload-ai-xxx.vercel.app）でテスト
+OKなら main にマージ
+fe
+git checkout main
+git merge feature/upload-ai
+git push
+質問あったら聞いてナリ！

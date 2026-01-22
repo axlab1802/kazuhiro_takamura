@@ -1,4 +1,9 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || process.env.REDIS_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN,
+});
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -6,10 +11,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Get works from KV
-    let works = await kv.get('works');
+    // Get works from Redis
+    let works = await redis.get('works');
 
-    // If no works in KV, return the static JSON data
+    // If no works in Redis, return the static JSON data
     if (!works) {
       // Fetch from static JSON file
       const baseUrl = process.env.VERCEL_URL 

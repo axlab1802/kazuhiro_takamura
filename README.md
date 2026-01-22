@@ -9,13 +9,13 @@
 
 ## 🚀 技術スタック
 
-- **Vite** - 高速な開発環境とホットリロード
+- **Next.js** - フロントとAPIを統合したフレームワーク
 - **HTML/CSS** - モダンなレスポンシブデザイン
 - **JavaScript** - インタラクティブなアニメーション
 - **Vercel** - 自動デプロイ対応
 - **Vercel Blob** - 画像ストレージ
-- **Vercel KV** - データストレージ
-- **Claude API** - AI画像解析
+- **Upstash Redis** - データストレージ
+- **Gemini API** - AI画像解析
 
 ## 📦 セットアップ
 
@@ -29,8 +29,8 @@ npm run dev
 # ビルド
 npm run build
 
-# プレビュー
-npm run preview
+# 本番起動
+npm run start
 ```
 
 ## 🎨 特徴
@@ -40,21 +40,26 @@ npm run preview
 - モダンなタイポグラフィ
 - グラデーション背景とカラーアクセント
 - ギャラリー機能
+- 作品アップロード & AIコメント生成
 
 ## 📂 ディレクトリ構造
 
 ```
 kazuhiro_Takamura/
-├── index.html          # メインHTMLファイル
-├── upload.html         # 作品アップロードページ
-├── api/                # Vercel Functions
-│   ├── upload.js       # 画像アップロードAPI
-│   ├── analyze.js      # Claude AI解析API
-│   ├── approve.js      # 作品承認API
-│   └── works.js        # 作品一覧API
+├── pages/              # Next.js Pages
+│   ├── index.js        # ルート（/index.htmlへリダイレクト）
+│   ├── upload.js       # /upload.htmlへリダイレクト
+│   └── api/            # API Routes
+│       ├── upload.js   # 画像アップロードAPI
+│       ├── analyze.js  # Gemini AI解析API
+│       ├── approve.js  # 作品承認API
+│       └── works.js    # 作品一覧API
 ├── public/             # 静的ファイル
+│   ├── index.html      # メインHTML（静的配信）
+│   ├── upload.html     # 作品アップロードページ
 │   └── assets/         # 画像アセット
-├── vite.config.js      # Vite設定
+├── docs/               # 仕様ドキュメント
+├── next.config.js      # Next.js設定
 ├── vercel.json         # Vercel設定
 ├── package.json        # 依存関係
 └── .gitignore          # Git除外設定
@@ -66,10 +71,12 @@ Vercelダッシュボードで以下の環境変数を設定してください�
 
 | 変数名 | 説明 |
 |--------|------|
-| `ANTHROPIC_API_KEY` | Claude API キー |
+| `GEMINI_API_KEY` | Gemini API キー |
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob トークン |
-| `KV_REST_API_URL` | Vercel KV URL |
-| `KV_REST_API_TOKEN` | Vercel KV トークン |
+| `UPSTASH_REDIS_REST_URL` | Upstash Redis URL（推奨） |
+| `UPSTASH_REDIS_REST_TOKEN` | Upstash Redis トークン（推奨） |
+| `KV_REST_API_URL` | Vercel Marketplaceが自動追加するURL（互換） |
+| `KV_REST_API_TOKEN` | Vercel Marketplaceが自動追加するトークン（互換） |
 
 ⚠️ **注意**: `.env`ファイルは絶対にGitHubにpushしないでください！
 
@@ -78,11 +85,20 @@ Vercelダッシュボードで以下の環境変数を設定してください�
 Vercelで自動デプロイ設定済み。  
 mainブランチへのプッシュで自動的にデプロイされます。
 
+## 📘 ドキュメント
+
+- `docs/requirements.md` - 機能要件定義
+- `docs/architecture.md` - アーキテクチャ設計
+- `docs/ui-spec.md` - UIデザイン仕様
+- `docs/api-spec.md` - API仕様
+- `docs/tasks.md` - 実装タスク一覧
+- `docs/knowhow.md` - つまづきポイントと解決方法
+
 ## 👨‍💻 開発情報
 
 - 開発サーバー: `http://localhost:1105`
 - ホットリロード: 有効
-- ビルド出力: `dist/`
+- ビルド出力: `.next/`
 
 ## 📝 ライセンス
 
