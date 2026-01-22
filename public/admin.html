@@ -61,6 +61,13 @@
       padding: 1rem;
     }
 
+    .card.is-hidden {
+      opacity: 0.55;
+      background: #111;
+      border-color: rgba(255,255,255,0.04);
+      filter: grayscale(0.2);
+    }
+
     .card img {
       width: 100%;
       border-radius: 8px;
@@ -181,7 +188,7 @@
       worksGrid.innerHTML = '';
       works.forEach((work, index) => {
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = `card${work.visible === false ? ' is-hidden' : ''}`;
         card.innerHTML = `
           <img src="${work.image}" alt="${work.title}">
           <label>タイトル</label>
